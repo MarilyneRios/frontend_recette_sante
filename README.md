@@ -9,13 +9,13 @@ Currently, two official plugins are available:
 
 # Procédure 
 
-1/  Premières commandes
+**1/  Premières commandes**
 
   cd frontend
   npm install
   npm run dev
 
-2/ vite.config.js
+**2/ vite.config.js**
 
     import { defineConfig } from 'vite'
     import react from '@vitejs/plugin-react'
@@ -37,29 +37,39 @@ Currently, two official plugins are available:
 L’option **changeOrigin** est définie sur true, => **l’origine de la requête sera modifiée pour correspondre à l’origine de la cible**.
 
 
-3/  npm i react-bootstrap react-icons :
+**3/  npm i react-bootstrap react-icons :**
 
 **react-bootstrap** : C’est une **bibliothèque de composants d’interface utilisateur pour React basée sur Bootstrap**, un framework populaire pour le développement front-end. Elle vous permet d’utiliser des composants Bootstrap préconstruits dans votre application React.
 
 **react-icons** : C’est une **bibliothèque qui fournit des icônes de plusieurs bibliothèques d’icônes populaires**, comme Font Awesome et Material Design, sous forme de composants React.
 
 
-4/ npm install bootstrap
+**4/ npm install bootstrap**
 
 
-5/ Dans le fichier main.jsx
+**5/ Dans le fichier main.jsx**
 
 import 'bootstrap/dist/css/bootstrap.min.css'; => importer le fichier CSS principal de Bootstrap . Cela permet d’**utiliser les styles de Bootstrap** dans l'application Vite React.
 
-6/ mkdir components
+**6/ mkdir components**
 
-7/ touch Header.jsx
+**7/ touch Header.jsx**
+
+Ensuite faire l'import dans App 
 
 ps: La différence entre Header.jsx et Header.js :
  - Header.js : C’est un fichier **JavaScript standard**. 
  - Header.jsx : C’est un fichier **JavaScript XML (JSX)**. JSX est une extension de la syntaxe JavaScript qui **permet d’écrire des structures ressemblant à du HTML dans votre code JavaScript**.
 
 
+**8/ mkdir screens puis HomeScreen.jsx**
 
-8/ npm install react-router-bootstrap
-# frontend_recette_sante
+Ensuite faire l'import dans App
+
+
+**9/ Hero.jsx dans Components:***
+
+Voir le text de l'écran d'accueil, mise en page : zone de texte btn se connecter ou s'inscrire
+
+**10/ npm install react-router-bootstrap**
+

@@ -6,7 +6,7 @@ import { TiUserAddOutline } from "react-icons/ti";
 const Header = () => {
   return (
     <header>
-      <Navbar bg="success" variant="dark" expand="lg" collapseOnSelect>
+      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <Navbar.Brand>Mon cahier de recettes</Navbar.Brand>
 
@@ -25,10 +25,10 @@ const Header = () => {
                 </NavDropdown>
                 <NavDropdown title="Filtrer par catégories" id="category">
                 <NavDropdown.Item>
-                     Apéro
+                    Apéro
                   </NavDropdown.Item>
                   <NavDropdown.Item>
-                     Entrée
+                    Entrée
                   </NavDropdown.Item>
                   <NavDropdown.Item>
                    Plat
@@ -46,17 +46,17 @@ const Header = () => {
                 </NavDropdown.Item>
                 
                 <NavDropdown.Item className="text-white">
-                Mes recettes favorites
+                Mes favoris
                 </NavDropdown.Item>
               </>
 
               <>
                 <Nav.Link>
-                  <FaSignInAlt /> Connexion
+                  <FaSignInAlt /> Se Connecter
                 </Nav.Link>
 
                 <Nav.Link>
-                  <TiUserAddOutline /> Inscription
+                  <TiUserAddOutline /> s&apos;inscrire
                 </Nav.Link>
               </>
             </Nav>

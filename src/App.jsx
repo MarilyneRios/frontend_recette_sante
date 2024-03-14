@@ -1,4 +1,5 @@
-import Header from "../components/Header"
+import Header from "./components/Header"
+import HomeScreen from "./screens/HomeScreen"
 import './App.css'
 
 function App() {
@@ -7,7 +8,8 @@ function App() {
   return (
     <>
     <Header/>
-  <h1>Mon cahier de recettes</h1>
+    <HomeScreen/>
+  
  
     </>
   )
