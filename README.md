@@ -73,3 +73,48 @@ Voir le text de l'écran d'accueil, mise en page : zone de texte btn se connecte
 
 **10/ npm install react-router-bootstrap**
 
+Composants Bootstrap  compatibles avec react-router.
+
+**11/ npm install react-router-dom**
+
+Composants de routage nécessaires pour créer une application à page unique avec navigation.
+
+**12/ createBrowserRouter,  createRoutesFromElements,  Route dans main.jsx**
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {createBrowserRouter,  createRoutesFromElements,  Route, RouterProvider  } from 'react-router-dom';
+import LoginScreen from './screens/LoginScreen.jsx';
+import RegisterScreen from './screens/RegisterScreen.jsx';
+import HomeScreen from './screens/HomeScreen.jsx';
+
+
+// Création du routeur
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<App />}>
+      <Route index={true} path='/' element={<HomeScreen />} />
+      <Route  path='/login' element={<LoginScreen />} />
+      <Route  path='/register' element={<RegisterScreen />} />
+    </Route>
+  )
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
+)
+
+**13/ Outlet dans App.jsx**
+
+Point de rendu pour les composants de route. 
+Lorsqu’une route est activée => le composant correspondant est rendu à l’endroit où se trouve le composant Outle (dans le fichier App.jsx).
+
+**14/ LinkContainer**
+
+Une intégration de react-router avec react-bootstrap. 
+LinkContainer est un composant qui enveloppe n’importe quel composant React Bootstrap et le transforme en un lien qui peut être utilisé pour la navigation. 
+Il est similaire au composant Link de react-router-dom, mais il est conçu pour fonctionner avec les composants React Bootstrap.

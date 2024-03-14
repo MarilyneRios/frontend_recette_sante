@@ -1,17 +1,20 @@
 import Header from "./components/Header"
-import HomeScreen from "./screens/HomeScreen"
 import './App.css'
+import {Outlet} from 'react-router-dom'
+import { Container } from 'react-bootstrap';
 
 function App() {
 
 
   return (
-    <>
+    <div  style={{ backgroundImage: 'url("/bg3.jpg")', backgroundSize: 'cover', backgroundRepeat: 'repeat' }}>
     <Header/>
-    <HomeScreen/>
+    <Container className="my-2"/>
+    <Outlet /> {/* Point d'insertion pour les écrans spécifiques */}
+
   
  
-    </>
+    </div>
   )
 }
 
