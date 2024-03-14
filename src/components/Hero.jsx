@@ -4,8 +4,8 @@ import { LinkContainer } from "react-router-bootstrap";
 const Hero = () => {
   return (
     <div className=" py-5">
-      <Container className="d-flex justify-content-center">
-        <Card className="p-5 d-flex flex-column align-items-center hero-card bg-light w-75">
+      <Container className="d-flex justify-content-center" >
+        <Card className="p-5 d-flex flex-column align-items-center hero-card bg-light w-75" style={{backgroundColor: '#f8f9fa'}}>
           <h1 className="text-center mb-4">Mon cahier de recettes</h1>
           <p className="text-center mb-4">
             Voici un site de partage de recettes tel que le faisaient nos mères

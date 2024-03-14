@@ -118,3 +118,7 @@ Lorsqu’une route est activée => le composant correspondant est rendu à l’e
 Une intégration de react-router avec react-bootstrap. 
 LinkContainer est un composant qui enveloppe n’importe quel composant React Bootstrap et le transforme en un lien qui peut être utilisé pour la navigation. 
 Il est similaire au composant Link de react-router-dom, mais il est conçu pour fonctionner avec les composants React Bootstrap.
+
+**15/ FormContainer.jsx**
+
+Pour la mise en forme des formulaires.
