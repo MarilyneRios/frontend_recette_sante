@@ -122,3 +122,45 @@ Il est similaire au composant Link de react-router-dom, mais il est conçu pour 
 **15/ FormContainer.jsx**
 
 Pour la mise en forme des formulaires.
+
+**16/ redux**
+
+npm i @reduxjs/toolkit react-redux
+
+**@reduxjs/toolkit**  simplifie l’utilisation de la configuration du **store**, la définition des **réducteurs**, la logique de mise à jour immuable puis génère automatiquement les actions et les créateurs d’actions correspondants.
+
+**react-redux** :  Il permet à vos composants React de **lire des données à partir d’un magasin Redux**.
+
+**16/ touch store.js**
+
+//////////////////////////////////////////////////////////////
+  import { configureStore } from '@reduxjs/toolkit';
+
+  const store = configureStore({
+  
+      reducer: {  },
+
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware(), 
+      devTools: true, 
+  });
+
+  export default store;
+//////////////////////////////////////////////////////////////
+ 
+Sans main.jsx:
+
+import store from './store';
+import { Provider } from 'react-redux';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+</Provider>
+)
+
+//////////////////////////////////////////////////////////////
+
+**17/ mkdir slices et touch authSlice.js**

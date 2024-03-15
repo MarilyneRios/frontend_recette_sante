@@ -28,13 +28,15 @@ const Header = () => {
                     <CgProfile /> Profile
                   </NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/'>
-                  <NavDropdown.Item className="">
+
+                  <LinkContainer to='/profile'>
+                  <NavDropdown.Item >
                   <GoPlusCircle /> Ajouter une recette
                 </NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to='/'>
-                <NavDropdown.Item className="">
+                
+                <LinkContainer to='/profile'>
+                <NavDropdown.Item >
                 <BsBookmarkPlus /> Mes favoris
                 </NavDropdown.Item>
                 </LinkContainer>
