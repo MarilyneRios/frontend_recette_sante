@@ -6,11 +6,13 @@ import {createBrowserRouter,  createRoutesFromElements,  Route, RouterProvider  
 //Redux
 import store from './store';
 import { Provider } from 'react-redux';
+
+import PrivateRoute from './components/PrivateRoute.jsx';
 // les screens
 import LoginScreen from './screens/LoginScreen.jsx';
 import RegisterScreen from './screens/RegisterScreen.jsx';
 import HomeScreen from './screens/HomeScreen.jsx';
-//import ProfileScreen from './screens/ProfileScreen.jsx';
+import ProfileScreen from './screens/ProfileScreen.jsx';
 //import CreateRecipeScreen from './screens/CreateRecipeScreen.jsx';
 //import AddRecipeFavoriteScreen from './screens/AddRecipeFavoriteScreen.jsx';
 import './index.css'
@@ -22,12 +24,11 @@ const router = createBrowserRouter(
       <Route index={true} path='/' element={<HomeScreen />} />
       <Route  path='/login' element={<LoginScreen />} />
       <Route  path='/register' element={<RegisterScreen />} />
-      {/* Toutes les routes qui doivent être privées 
+      {/* Toutes les routes qui doivent être privées */}
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen/>} />
-        <Route path='/addRecipeFavorite' element={<AddRecipeFavoriteScreen/>} />
-        <Route path='/createRecipe' element={<CreateRecipeScreen/>} />
-      </Route>*/}
+     
+      </Route>
     </Route>
   )
 );
@@ -39,3 +40,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>
 </Provider>
 )
+ /*
+    <Route path='/addRecipeFavorite' element={<AddRecipeFavoriteScreen/>} />
+    <Route path='/createRecipe' element={<CreateRecipeScreen/>} />
+ */

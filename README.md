@@ -167,3 +167,30 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 **18/ Pour montrer les erreur** 
 npm install  react-toastify
+
+**19/ Loader.jsx**
+
+**20/ quand user connecté, HomeScreen change**
+///////////////////////////////////////////////////////////////////////////////////
+import React from "react"; // N'oubliez pas d'importer React si vous utilisez JSX
+import Hero from "../components/Hero";
+import { useSelector } from "react-redux";
+
+const HomeScreen = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+
+  return (
+    <div>
+      {!userInfo ? (
+        <Hero />
+      ) : (
+        <h1>Utilisateur connecté</h1> 
+      )}
+    </div>
+  );
+};
+
+export default HomeScreen;
+///////////////////////////////////////////////////////////////////////////////////
+
+**21/ ProfileScreen, modif main et PrivateRoute**
