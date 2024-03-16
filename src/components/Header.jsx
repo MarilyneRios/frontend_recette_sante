@@ -6,23 +6,44 @@ import { BsBookmarkPlus } from "react-icons/bs";
 import { GoPlusCircle } from "react-icons/go";
 
 import { LinkContainer } from 'react-router-bootstrap';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../slices/usersApiSlice';
+import { logout } from '../slices/authSlice';
 
 const Header = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+ 
+ const [logoutApiCall] = useLogoutMutation();
+
+ const handleLogout = async () => {
+   try {
+     await logoutApiCall().unwrap();
+     dispatch(logout());
+     navigate('/login');
+   } catch (err) {
+     console.error(err);
+   }
+ };
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-        
-        <LinkContainer to='/'>
+          <LinkContainer to='/'>
           <Navbar.Brand>Mon cahier de recettes</Navbar.Brand>
         </LinkContainer>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+
             <Nav className="ms-auto  d-flex align-items-center justify-content-center">
+            {userInfo ? (
               <>
-                <NavDropdown title="userInfo.username" id="username">
+                <NavDropdown title={userInfo.username} id="username">
                 <LinkContainer to='/profile'>
                   <NavDropdown.Item>
                     <CgProfile /> Profile
@@ -41,9 +62,9 @@ const Header = () => {
                 </NavDropdown.Item>
                 </LinkContainer>
 
-                  <NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogout}>
                     <FaSignOutAlt />
-                    Logout
+                    Déconnexion
                   </NavDropdown.Item>
 
                 </NavDropdown>
@@ -67,7 +88,7 @@ const Header = () => {
                 </NavDropdown>
              
               </>
-
+              ) : (
               <>
               <LinkContainer to='/login'>
               <Nav.Link>
@@ -80,8 +101,8 @@ const Header = () => {
                   <TiUserAddOutline /> s&apos;inscrire
                 </Nav.Link>
               </LinkContainer>
-
               </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

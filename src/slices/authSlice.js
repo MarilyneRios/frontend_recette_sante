@@ -1,3 +1,4 @@
+//les infos sur le user
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -9,6 +10,7 @@ const initialState = {
   const authSlice = createSlice({
     name: 'auth',
     initialState,
+
     reducers: {
 
     //Les informations d'identification

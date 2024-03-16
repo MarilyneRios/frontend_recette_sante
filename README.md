@@ -164,3 +164,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 //////////////////////////////////////////////////////////////
 
 **17/ mkdir slices et touch authSlice.js**
+
+**18/ Pour montrer les erreur** 
+npm install  react-toastify
