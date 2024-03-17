@@ -1,4 +1,4 @@
-/*
+
 // infos sur une recette
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -31,4 +31,3 @@ export const { setRecipe, resetRecipeInfo } = recipeSlice.actions;
 
 export default recipeSlice.reducer;
 
-*/

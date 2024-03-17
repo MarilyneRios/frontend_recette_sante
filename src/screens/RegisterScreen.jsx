@@ -68,7 +68,7 @@ const RegisterScreen = () => {
         <Form.Label>Addresse Email</Form.Label>
         <Form.Control
           type='email'
-          placeholder='Entrer votre email'
+          placeholder='"nom@exemple.com"'
           value={email}
           autoComplete='email'
           onChange={(e) => setEmail(e.target.value)}

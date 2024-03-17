@@ -50,13 +50,13 @@ const Header = () => {
                   </NavDropdown.Item>
                   </LinkContainer>
 
-                  <LinkContainer to='/profile'>
+                  <LinkContainer to='/createRecipe'>
                   <NavDropdown.Item >
                   <GoPlusCircle /> Ajouter une recette
                 </NavDropdown.Item>
                 </LinkContainer>
                 
-                <LinkContainer to='/profile'>
+                <LinkContainer to='/addRecipeFavorite/:id'>
                 <NavDropdown.Item >
                 <BsBookmarkPlus /> Mes favoris
                 </NavDropdown.Item>

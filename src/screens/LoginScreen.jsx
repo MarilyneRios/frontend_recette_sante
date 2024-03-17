@@ -39,14 +39,14 @@ const LoginScreen = () => {
   }
 
   return (
-     <FormContainer  style={{backgroundColor: '#f8f9fa'}}>
+     <FormContainer >
       <h1 className="text-center">Connexion</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="my-2" controlId="email">
           <Form.Label>Addresse email</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Entrer votre email"
+            placeholder="nom@exemple.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
