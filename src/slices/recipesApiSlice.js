@@ -1,51 +1,52 @@
-/*
- import { apiSlice } from './apiSlice';
+import { apiSlice } from './apiSlice';
 
- // l’URL de base pour les appels d’API liés users
+// L'URL de base pour les appels d'API liés aux recettes
 const RECIPES_URL = '/api/recipes';
 
-export const userApiSlice = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({
-        addRecipe:  builder.mutation({
-            query: (data) => ({
-                url: `${RECIPES_URL}`,
-                method: 'POST',
-                body: data,
-            }),
-        }), 
-        updateRecipe:  builder.mutation({
-            query: (data) => ({
-                url: `${RECIPES_URL}`,
-                method: 'PUT',
-                body: data,
-            }), 
-        }),    
-         deleteRecipe:  builder.mutation({
-            query: (data) => ({
-                url: `${RECIPES_URL}`,
-                method: 'DELETE',
-                body: data,
-            }),   
-        }),    
-         savedRecipe : builder.mutation({
-            query: (data) => ({
-                url: `${RECIPES_URL}`,
-                method: 'POST',
-                body: data,
-            }),
-        }),    
-         unsavedRecipe  builder.mutation({
-            query: (data) => ({
-                url: `${RECIPES_URL}`,
-                method: 'DELETE',
-                body: data,
-            }),    
-        }),           
-    })
+export const recipeApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    addRecipe: builder.mutation({
+      query: (data) => ({
+        url: `${RECIPES_URL}/createRecipe`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    updateRecipe: builder.mutation({
+      query: (data) => ({
+        url: `${RECIPES_URL}/updateRecipe/:id`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
+    deleteRecipe: builder.mutation({
+      query: (data) => ({
+        url: `${RECIPES_URL}/deleteRecipe/:id`,
+        method: 'DELETE',
+        body: data,
+      }),
+    }),
+    savedRecipe: builder.mutation({
+      query: (data) => ({
+        url: `${RECIPES_URL}/addRecipeFavorite/:id`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    unsavedRecipe: builder.mutation({
+      query: (data) => ({
+        url: `${RECIPES_URL}/removeRecipeFavorite/:id`,
+        method: 'DELETE',
+        body: data,
+      }),
+    }),
+  }),
+});
 
-})
- 
 export const {
-useAddRecipeMutation
+  useAddRecipeMutation,
+  useUpdateRecipeMutation,
+  useDeleteRecipeMutation,
+  useSavedRecipeMutation,
+  useUnsavedRecipeMutation,
 } = recipeApiSlice;
-*/

@@ -1,47 +1,35 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Form, Button} from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-import { useDispatch, useSelector } from 'react-redux';
+
 
 const UpdateRecipeScreen = () => {
-
-   const { userInfo } = useSelector((state) => state.auth);
-   const {recipeInfo} = useSelector((state)=> state.recipe);
-
    
-  const [recipe, setRecipe] = useState({
-    name: "",
-    category: "",
-    ingredients: [],
-    instructions: "",
-    makingTime: "",
-    cookingTime: "",
-    comments: "",
-    pseudo: "",
-    imageUrl: "",
-    userId: window.localStorage.getItem("id"),
-  });
-  
-   const [name, setName] = useState("");
-   const [category, setCategory] = useState("");
-   const [ingredients, setIngredients] = useState("");
-   const [instructions, setInstructions] = useState("");
-   const [makingTime, setMakingTime] = useState("");
-   const [cookingTime, setCookingTime] = useState("");
-   const [comments, setComments] = useState("");
-   const [pseudo, setPseudo] = useState("");
-   const [imageUrl, setImageUrl] = useState("");
+   const navigate = useNavigate();
+   const [recipe, setRecipe]= useState([]);
 
+  
    const handleChange = (e) => {
     const { name, value } = e.target;
     setRecipe({ ...recipe, [name]: value });
   };
 
+  const handleIngredientChange = (e, index) => {
+    const newIngredients = [...recipe.ingredients];
+    newIngredients[index] = e.target.value;
+    setRecipe({ ...recipe, ingredients: newIngredients });
+  };
+
+  const addIngredient = () => {
+    setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
+  };
+
    // Fonction pour gérer la soumission du formulaire
    const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`les infos de la recette : ${recipe}`)
+    console.log(`les infos de la recette : ${recipe}`);
+    navigate('/');
   };
 
   return (
@@ -49,7 +37,7 @@ const UpdateRecipeScreen = () => {
     <h1 className="text-center">Modifier la recette</h1>
     <Form onSubmit={handleSubmit}>
 
-      <Form.Group className='my-2' controlId='username'>
+      <Form.Group className='my-2' controlId='name'>
         <Form.Label>Nom de la recette :</Form.Label>
         <Form.Control
        className="form-control input-lg"

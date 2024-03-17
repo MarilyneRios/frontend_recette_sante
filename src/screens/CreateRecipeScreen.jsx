@@ -1,16 +1,14 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-import { useDispatch, useSelector } from 'react-redux';
-//import { useAddRecipeMutation } from '../slices/recipesApiSlice';
 
-//import Loader from '../components/Loader';
+import { useAddRecipeMutation } from '../slices/recipesApiSlice';
+
+import { toast } from 'react-toastify'
+import Loader from '../components/Loader';
 
 const CreateRecipeScreen = () => {
-
-  //const[createRecipe, {isLoading}] = useAddRecipeMutation();
-  const { userInfo } = useSelector((state) => state.auth);
 
   const [recipe, setRecipe] = useState({
     name: "",
@@ -25,15 +23,16 @@ const CreateRecipeScreen = () => {
     userId: window.localStorage.getItem("id"),
   });
 
+  const navigate = useNavigate();
+
+  const[createRecipe, {isLoading}] = useAddRecipeMutation();
+ 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setRecipe({ ...recipe, [name]: value });
+      const { name, value } = e.target;
+      setRecipe({ ...recipe, [name]: value });
   };
 
-  
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-   
+   //ajout ingrédient
   const handleIngredientChange = (e, index) => {
     const newIngredients = [...recipe.ingredients];
     newIngredients[index] = e.target.value;
@@ -47,15 +46,25 @@ const CreateRecipeScreen = () => {
   // Fonction pour gérer la soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`les infos de la recette : ${recipe}`)
+    //console.log("Submitting recipe:", recipe); 
+    try {
+      const result = await createRecipe(recipe).unwrap();
+      //console.log("Recipe created successfully:", result);
+      toast.success("Recette créée avec succès." );
+      navigate('/');
+    } catch (error) {
+     // console.error("Error creating recipe:", error);
+      toast.error("Erreur lors de la création de la recette." );
+    }
   };
+  
 
   return (
     <FormContainer >
     <h1 className="text-center">Créer une recette</h1>
     <Form onSubmit={handleSubmit}>
 
-      <Form.Group className='my-2' controlId='username'>
+      <Form.Group className='my-2' controlId='name'>
         <Form.Label>Nom de la recette :</Form.Label>
         <Form.Control
        className="form-control input-lg"
@@ -71,7 +80,6 @@ const CreateRecipeScreen = () => {
         <Form.Control as="select"
             className="form-control input-lg"
             aria-label="Default select example"
-            id="category"
             name="category"
             value={recipe.category}
             onChange={handleChange}
@@ -181,7 +189,7 @@ const CreateRecipeScreen = () => {
           Enregistrer la recette
       </Button>
       
-     {/* {isLoading && <Loader />} */} 
+      {isLoading && <Loader />} 
       </Form>
 
     </FormContainer>
@@ -189,3 +197,14 @@ const CreateRecipeScreen = () => {
 }
 
 export default CreateRecipeScreen
+
+/*  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [instructions, setInstructions] = useState("");
+  const [makingTime, setMakingTime] = useState("");
+  const [cookingTime, setCookingTime] = useState("");
+  const [comments, setComments] = useState("");
+  const [pseudo, setPseudo] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+*/
