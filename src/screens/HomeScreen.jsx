@@ -1,5 +1,6 @@
 import Hero from "../components/Hero";
 import { useSelector } from "react-redux";
+import ReadRecipeS from "./readRecipeS";
 
 const HomeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -9,8 +10,11 @@ const HomeScreen = () => {
       {!userInfo ? (
         <Hero /> 
       ) : (
-        <h1 className="text-center text-white">Utilisateur connecté</h1> 
-      )}
+        <div className="m-4">
+        <ReadRecipeS/>
+      
+        </div>
+        )}
     </div>
   );
 };

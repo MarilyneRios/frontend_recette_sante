@@ -1,43 +1,95 @@
-import { apiSlice } from './apiSlice';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// L'URL de base pour les appels d'API liés aux recettes
-const RECIPES_URL = '/api/recipes';
-
-export const recipeApiSlice = apiSlice.injectEndpoints({
+export const apiSlice = createApi({
+  reducerPath: 'api',
+  baseQuery: fetchBaseQuery({ baseUrl: '/api/recipes' }),
   endpoints: (builder) => ({
     addRecipe: builder.mutation({
       query: (data) => ({
-        url: `${RECIPES_URL}/createRecipe`,
+        url: `/createRecipe`,
         method: 'POST',
         body: data,
       }),
     }),
     updateRecipe: builder.mutation({
-      query: (data) => ({
-        url: `${RECIPES_URL}/updateRecipe/:id`,
+      query: ({id, ...data}) => ({
+        url: `/updateRecipe/${id}`,
         method: 'PUT',
         body: data,
       }),
     }),
     deleteRecipe: builder.mutation({
-      query: (data) => ({
-        url: `${RECIPES_URL}/deleteRecipe/:id`,
+      query: (id) => ({
+        url: `/deleteRecipe/${id}`,
         method: 'DELETE',
-        body: data,
       }),
     }),
+
+
     savedRecipe: builder.mutation({
-      query: (data) => ({
-        url: `${RECIPES_URL}/addRecipeFavorite/:id`,
+      query: (id) => ({
+        url: `/addRecipeFavorite/${id}`,
         method: 'POST',
-        body: data,
       }),
     }),
     unsavedRecipe: builder.mutation({
-      query: (data) => ({
-        url: `${RECIPES_URL}/removeRecipeFavorite/:id`,
+      query: (id) => ({
+        url: `/removeRecipeFavorite/${id}`,
         method: 'DELETE',
-        body: data,
+      }),
+    }),
+
+
+    allRecipesAuth: builder.query({
+      query: () => ({
+        url: `/allRecipesAuth`,
+        method: 'GET',
+      }),
+    }),
+    oneRecipeAuth: builder.query({
+      query: (id) => ({
+        url: `/oneRecipeAuth/${id}`,
+        method: 'GET',
+      }),
+    }),
+
+
+    searchRecipe: builder.query({
+      query: (query) => ({
+        url: `/searchRecipe/${query}`,
+        method: 'GET',
+      }),
+    }),
+    filterRecipe: builder.query({
+      query: (query) => ({
+        url: `/filterRecipe/${query}`,
+        method: 'GET',
+      }),
+    }),
+
+    
+    allRecipesFavorite: builder.query({
+      query: () => ({
+        url: `/allRecipesFavorite`,
+        method: 'GET',
+      }),
+    }),
+    oneRecipesFavorite: builder.query({
+      query: (id) => ({
+        url: `/oneRecipesFavorite/${id}`,
+        method: 'GET',
+      }),
+    }),
+    addRecipeFavorite: builder.mutation({
+      query: (id) => ({
+        url: `/addRecipeFavorite/${id}`,
+        method: 'POST',
+      }),
+    }),
+    removeRecipeFavorite: builder.mutation({
+      query: (id) => ({
+        url: `/removeRecipeFavorite/${id}`,
+        method: 'DELETE',
       }),
     }),
   }),
@@ -49,4 +101,14 @@ export const {
   useDeleteRecipeMutation,
   useSavedRecipeMutation,
   useUnsavedRecipeMutation,
-} = recipeApiSlice;
+
+  useAllRecipesAuthQuery,
+  useOneRecipeAuthQuery,
+  useSearchRecipeQuery,
+  useFilterRecipeQuery,
+  useAllRecipesFavoriteQuery,
+  useOneRecipesFavoriteQuery,
+
+  useAddRecipeFavoriteMutation,
+  useRemoveRecipeFavoriteMutation,
+} = apiSlice;
