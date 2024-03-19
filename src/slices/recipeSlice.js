@@ -3,9 +3,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  recipeInfo: localStorage.getItem('recipeInfo')
-    ? JSON.parse(localStorage.getItem('recipeInfo'))
-    : null
+  recipeInfo: {
+    name: '',
+    category: '',
+    ingredients: [],
+    instructions: '',
+    makingTime: 0,
+    cookingTime: 0,
+    comments: '',
+    pseudo: '',
+    imageUrl: '',
+    userId: '',
+  },
 };
 
 const recipeSlice = createSlice({

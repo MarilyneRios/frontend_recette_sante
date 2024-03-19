@@ -1,8 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const apiSlice = createApi({
+
+
+export const recipesApiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: '/api/recipes' }),
+  
   endpoints: (builder) => ({
     addRecipe: builder.mutation({
       query: (data) => ({
@@ -22,6 +25,7 @@ export const apiSlice = createApi({
       query: (id) => ({
         url: `/deleteRecipe/${id}`,
         method: 'DELETE',
+        body: id,
       }),
     }),
 
@@ -44,6 +48,8 @@ export const apiSlice = createApi({
       query: () => ({
         url: `/allRecipesAuth`,
         method: 'GET',
+        transformResponse: res => res.sort((a, b) => b.id - a.id),
+        providesTags: ['recipes'],
       }),
     }),
     oneRecipeAuth: builder.query({
@@ -90,6 +96,7 @@ export const apiSlice = createApi({
       query: (id) => ({
         url: `/removeRecipeFavorite/${id}`,
         method: 'DELETE',
+        body: id,
       }),
     }),
   }),
@@ -111,4 +118,4 @@ export const {
 
   useAddRecipeFavoriteMutation,
   useRemoveRecipeFavoriteMutation,
-} = apiSlice;
+} = recipesApiSlice;

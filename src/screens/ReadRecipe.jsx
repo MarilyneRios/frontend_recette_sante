@@ -4,7 +4,7 @@ import FormContainer from "../components/FormContainer";
 import { Image, Button } from "react-bootstrap";
 import bookImage from "../assets/book.png";
 
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 //import Loader from "../components/Loader";
 
 function ReadRecipe() {

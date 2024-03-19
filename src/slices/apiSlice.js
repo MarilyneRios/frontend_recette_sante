@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({ baseUrl: '' });
 //création d'API qui est un objet de configuration avec plusieurs propriétés.
 export const apiSlice = createApi({
   baseQuery,
-  tagTypes: ['User'], 
+  tagTypes: ['User','recipe'], 
   endpoints: (builder) => ({
    
   }),
