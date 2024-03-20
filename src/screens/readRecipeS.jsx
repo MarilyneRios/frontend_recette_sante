@@ -41,13 +41,15 @@ function ReadRecipeS({ recipes, currentPage }) {
               <Col md={4}>
                 <Card
                   key={recipe.id}
-                  className="m-3 "
+                  className="m-3"
                   style={{ width: "16rem", position: "relative" }}
                 >
                 <Link to={{
                   pathname: `/oneRecipeAuth/${recipe.id}`,
                   state: { recipe: recipe }
-                }}>
+                  }}
+                  className="text-decoration-none text-black"
+                >
                   <Button
                     variant="outline-primary"
                     onClick={toggleLike}
