@@ -56,6 +56,8 @@ export const recipesApiSlice = createApi({
       query: (id) => ({
         url: `/oneRecipeAuth/${id}`,
         method: 'GET',
+        transformResponse: res => res.sort((a, b) => b.id - a.id),
+        providesTags: ['recipes'],
       }),
     }),
 

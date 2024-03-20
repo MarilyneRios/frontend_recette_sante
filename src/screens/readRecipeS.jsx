@@ -1,11 +1,13 @@
 /* eslint-disable react/jsx-key */
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useSelector } from "react-redux";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import bookImage from "../assets/book.png";
 import { useAllRecipesAuthQuery } from "../slices/recipesApiSlice";
+import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import Loader from "../components/Loader";
+
 
 function ReadRecipeS({ recipes, currentPage }) {
   const [liked, setLiked] = useState(false);
@@ -25,7 +27,8 @@ function ReadRecipeS({ recipes, currentPage }) {
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
   const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
-
+  
+  
   return (
     <>
       {isLoading && <Loader />}
@@ -34,12 +37,17 @@ function ReadRecipeS({ recipes, currentPage }) {
         <Container className="w-75">
           <Row>
             {currentRecipes.map((recipe) => (
+             
               <Col md={4}>
                 <Card
                   key={recipe.id}
                   className="m-3 "
                   style={{ width: "16rem", position: "relative" }}
                 >
+                <Link to={{
+                  pathname: `/oneRecipeAuth/${recipe.id}`,
+                  state: { recipe: recipe }
+                }}>
                   <Button
                     variant="outline-primary"
                     onClick={toggleLike}
@@ -70,6 +78,7 @@ function ReadRecipeS({ recipes, currentPage }) {
                       De {recipe.pseudo}
                     </Card.Text>
                   </Card.Body>
+                  </Link>
                 </Card>
               </Col>
             ))}
