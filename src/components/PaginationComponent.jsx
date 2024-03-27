@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { Pagination } from "react-bootstrap";
 
 const PaginationComponent = ({ recipes, currentPage, setCurrentPage }) => {

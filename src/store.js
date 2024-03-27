@@ -9,12 +9,10 @@ const store = configureStore({
   reducer: {  
     [apiSlice.reducerPath]: apiSlice.reducer, 
       auth: authReducer,
-      [recipesApiSlice.reducerPath]:recipesApiSlice.reducer,
+    [recipesApiSlice.reducerPath]:recipesApiSlice.reducer,
       recipe: recipeReducer,
   },
       
-
-
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware), 
     devTools: true, 

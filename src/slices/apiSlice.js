@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({ baseUrl: '' });
 //création d'API qui est un objet de configuration avec plusieurs propriétés.
 export const apiSlice = createApi({
   baseQuery,
-  tagTypes: ['User','recipe'], 
+  tagTypes: ['User','Recipes'], 
   endpoints: (builder) => ({
    
   }),
@@ -17,4 +17,5 @@ export const apiSlice = createApi({
 Ces tags peuvent être utilisés pour organiser et regrouper vos endpoints d'API 
 en fonction de leur fonctionnalité ou de leur domaine
  tagTypes: ['User', 'Recipe'], 
+ frontend User == backend User model export
 */
