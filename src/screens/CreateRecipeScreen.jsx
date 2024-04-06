@@ -1,4 +1,5 @@
 import { useState} from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
@@ -9,6 +10,8 @@ import { toast } from 'react-toastify'
 import Loader from '../components/Loader';
 
 const CreateRecipeScreen = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  console.log("createRecipe userInfo" + JSON.stringify(userInfo, null, 2))
 
   const [recipe, setRecipe] = useState({
     name: "",
@@ -18,7 +21,7 @@ const CreateRecipeScreen = () => {
     makingTime: "",
     cookingTime: "",
     comments: "",
-    pseudo: "",
+    pseudo: userInfo.username,
     imageUrl: "",
     userId: window.localStorage.getItem("id"),
   });
@@ -58,7 +61,6 @@ const CreateRecipeScreen = () => {
     }
   };
   
-
   return (
     <FormContainer >
     <h1 className="text-center">Créer une recette</h1>
@@ -160,17 +162,19 @@ const CreateRecipeScreen = () => {
             placeholder="Ecrire les vertues de la recette"
         ></Form.Control>
       </Form.Group>
-
+{/*
       <Form.Group className='my-2' controlId='pseudo'>
         <Form.Label>Le pseudo de l&apos;auteur :</Form.Label>
         <Form.Control
        className="form-control input-lg"
             type="text"
             name="pseudo"
+            value={recipe.pseudo} 
             onChange={handleChange}
-            placeholder="ex: Doudou"
+            placeholder="{recipe.pseudo} "
+            disabled 
         ></Form.Control>
-      </Form.Group>
+      </Form.Group>*/}
 
       <Form.Group className='my-2' controlId='imageUrl'>
         <Form.Label>Image de la recette :</Form.Label>

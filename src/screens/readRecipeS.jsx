@@ -1,7 +1,7 @@
+
 /* eslint-disable react/jsx-key */
-import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import {  Container, Row } from "react-bootstrap";
 
 import { useAllRecipesAuthQuery } from "../slices/recipesApiSlice";
 
@@ -28,8 +28,8 @@ function ReadRecipeS({ recipes, currentPage }) {
       {isSuccess && (
         <Container className="w-75">
           <Row>
-            {currentRecipes &&
-              currentRecipes.map((recipe) => <RecipeCard recipe={recipe} />)}
+          {currentRecipes &&
+          currentRecipes.map((recipe,index) => <RecipeCard key={index} recipe={recipe} />)}
           </Row>
         </Container>
       )}

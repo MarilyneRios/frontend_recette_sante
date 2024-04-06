@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+/*import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FormContainerRecipe from "../components/FormContainerRecipe";
 import { Card, Button } from "react-bootstrap";
@@ -6,10 +6,11 @@ import bookImage from "../assets/book.png";
 import { useOneRecipeAuthQuery } from "../slices/recipesApiSlice";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Loader from "../components/Loader";
-import { useParams, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";*/
+import '../App.css'
 
-function ReadRecipe(recipeProps) {
- 
+function ReadRecipe() { //recipeProps
+ /*
   const { userInfo } = useSelector((state) => state.auth);
   console.log("userInfo :"+ userInfo);
 
@@ -44,10 +45,11 @@ function ReadRecipe(recipeProps) {
    //like btn logique
     const toggleLike = () => {
       setLiked(!liked);
-    };
+    };*/
 
     return (
       <>
+      {/*
       {isLoading && <Loader />}
       {isError && <h3>Something went wrong...</h3>}
       {isSuccess && (
@@ -76,7 +78,7 @@ function ReadRecipe(recipeProps) {
                   <Card.Img
                     variant="top"
                     src={recipe.imageUrl || bookImage}
-                    className="mx-auto mt-3 w-25 "
+                    className="mx-auto mt-3 w-10"
                   />
                   <Card.Body >
                     <Card.Title className="text-center">
@@ -105,7 +107,7 @@ function ReadRecipe(recipeProps) {
                   </Card.Body>
                 </Card>
           </FormContainerRecipe>
-          )}
+          )}*/}
       </>
     );
   }
