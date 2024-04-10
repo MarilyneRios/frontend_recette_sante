@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card, Button, ListGroup, Col } from "react-bootstrap";
 import bookImage from "../assets/book.png";
-import { IoCloseCircleSharp } from "react-icons/io5";
-import { IoReturnUpBack } from "react-icons/io5";
 
+import { IoReturnUpBack } from "react-icons/io5";
+import { useDeleteRecipeMutation } from "../slices/recipesApiSlice";
 
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
@@ -14,10 +14,28 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 function RecipeCard({ recipe }) {
   const [liked, setLiked] = useState(false);
   const [isBigCard, setIsBigCard] = useState(false);
+  //const [recipe, setRecipe] = useState("");
 
   const { userInfo } = useSelector((state) => state.auth);
   console.log("RecipeCard userInfo" + JSON.stringify(userInfo, null, 2));
-  console.log("RecipeCard recipe" + JSON.stringify(recipe, null, 2));
+  //console.log("RecipeCard recipe" + JSON.stringify(recipe, null, 2));
+
+  const [deleteRecipe, { isLoading, isError, isSuccess, error }] = useDeleteRecipeMutation();
+
+  const handleDeleteRecipe = () => {
+    console.log("click");
+    console.log('Recipe object:', recipe);
+    console.log('Recipe ID:', recipe._id);
+
+    
+    deleteRecipe(recipe._id)
+      .then((response) => {
+        console.log("Recipe deletion response:", response);
+      })
+      .catch((error) => {
+        console.error("Error deleting recipe:", error);
+      });
+  };
 
   const handleBigCardClick = () => {
     setIsBigCard(!isBigCard);
@@ -116,7 +134,8 @@ function RecipeCard({ recipe }) {
               >
               <IoReturnUpBack />
               </Button>
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center"> 
+              
           {userInfo && userInfo.username === recipe.pseudo && (
             <>
               <Link
@@ -126,6 +145,7 @@ function RecipeCard({ recipe }) {
                 Modifier
               </Link>
               <Button
+                onClick={handleDeleteRecipe}
                 className="btn btn-danger rounded mx-2 mt-2"
               >
                Effacer

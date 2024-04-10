@@ -1,18 +1,25 @@
-
-// infos sur une recette
 import { createSlice } from '@reduxjs/toolkit';
 
+// Initialisation de l'état initial pour le slice Redux
 const initialState = {
-  recipeInfo: localStorage.getItem('recipeInfo')
-  ? JSON.parse(localStorage.getItem('recipeInfo'))
-  : null
+  recipeInfo: {
+    name: "",
+    category: "",
+    ingredients: [],
+    instructions: "",
+    makingTime: "",
+    cookingTime: "",
+    comments: "",
+    pseudo: "",
+    imageUrl: "",
+    userId: window.localStorage.getItem("id"),
+  }
 };
 
 const recipeSlice = createSlice({
   name: 'recipe',
   initialState,
   reducers: {
-
     // Définir les infos de la recette + mise à jour et stock dans le local storage
     setRecipe: (state, action) => {
       state.recipeInfo = action.payload;
@@ -21,7 +28,7 @@ const recipeSlice = createSlice({
 
     // Réinitialiser RecipeInfo
     resetRecipeInfo: (state) => {
-      state.recipeInfo = null;
+      state.recipeInfo = initialState.recipeInfo;
       localStorage.removeItem('recipeInfo');
     },
   },
@@ -30,4 +37,3 @@ const recipeSlice = createSlice({
 export const { setRecipe, resetRecipeInfo } = recipeSlice.actions;
 
 export default recipeSlice.reducer;
-
