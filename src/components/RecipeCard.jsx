@@ -60,7 +60,7 @@ function RecipeCard({ recipe }) {
           variant="top"
           // eslint-disable-next-line react/prop-types
           src={recipe.imageUrl || bookImage}
-          className="p-3 m-auto"
+          className="p-3 m-auto "
           style={{ width: isBigCard ? "20rem" : "10rem" }}
         />
         <Card.Body>
@@ -116,11 +116,7 @@ function RecipeCard({ recipe }) {
               >
               <IoReturnUpBack />
               </Button>
-              </>
-              
-            )}
-          </div>
-          <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center">
           {userInfo && userInfo.username === recipe.pseudo && (
             <>
               <Link
@@ -137,6 +133,11 @@ function RecipeCard({ recipe }) {
             </>
           )}
         </div>
+              </>
+              
+            )}
+          </div>
+
         </Card.Body>
       </Card>
     </Col>

@@ -8,7 +8,7 @@ import { useAllRecipesAuthQuery } from "../slices/recipesApiSlice";
 import Loader from "../components/Loader";
 import RecipeCard from "../components/RecipeCard";
 
-function ReadRecipeS({ recipes, currentPage }) {
+function ReadRecipeS({ recipes, currentPage, setBigCardIndex  }) {
   const { userInfo } = useSelector((state) => state.auth);
   console.log(userInfo);
 
@@ -29,7 +29,10 @@ function ReadRecipeS({ recipes, currentPage }) {
         <Container className="w-75">
           <Row>
           {currentRecipes &&
-          currentRecipes.map((recipe,index) => <RecipeCard key={index} recipe={recipe} />)}
+            currentRecipes.map((recipe, index) => (
+              <RecipeCard key={index} recipe={recipe} index={index} setBigCardIndex={setBigCardIndex} />
+            ))
+          }
           </Row>
         </Container>
       )}

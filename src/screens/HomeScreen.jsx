@@ -7,11 +7,10 @@ import PaginationComponent from "../components/PaginationComponent";
 
 const HomeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
-
   const result = useAllRecipesAuthQuery();
   const recipes = result.data || [];
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [bigCardIndex, setBigCardIndex] = useState(null);
 
   return (
     <div>
@@ -22,13 +21,17 @@ const HomeScreen = () => {
           <div className=" d-flex flex-wrap justify-content-around align-self-sm-stretch">
             <ReadRecipeS 
             recipes={recipes} 
-            currentPage={currentPage} />
+            currentPage={currentPage}
+            setBigCardIndex={setBigCardIndex} />
           </div>
           <div>
+          {bigCardIndex === null && (
             <PaginationComponent 
-            recipes={recipes} 
-            currentPage={currentPage} 
-            setCurrentPage={setCurrentPage} />
+              recipes={recipes} 
+              currentPage={currentPage} 
+              setCurrentPage={setCurrentPage} 
+            />
+          )}
           </div>
         </div>
       )}
