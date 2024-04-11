@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { useParams } from "react-router-dom";
@@ -9,10 +9,12 @@ import {
   useUpdateRecipeMutation,
   useOneRecipeAuthQuery,
 } from "../slices/recipesApiSlice";
+import { useNavigate } from 'react-router-dom';
 
 const UpdateRecipeScreen = () => {
   const { id } = useParams();
 
+  const { userInfo } = useSelector((state) => state.auth);
   const [recipe, setRecipe] = useState({
     name: "",
     category: "",
@@ -26,7 +28,10 @@ const UpdateRecipeScreen = () => {
     userId: window.localStorage.getItem("id"),
   });
 
-  //const [recipe, setRecipe]= useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRecipe({ ...recipe, [name]: value });
@@ -63,10 +68,9 @@ const UpdateRecipeScreen = () => {
     setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
   };
 
-  const navigate = useNavigate();
 
   //mise à jour
-  const [updateRecipe] = useUpdateRecipeMutation();
+  const [updateRecipe, { isLoading, isError, isSuccess, error }] = useUpdateRecipeMutation();
  
 
   // Fonction pour gérer la soumission du formulaire
@@ -86,7 +90,7 @@ const UpdateRecipeScreen = () => {
 
   return (
     <FormContainer>
-      <h1 className="text-center">Créer une recette</h1>
+      <h1 className="text-center">Modifier une recette</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="my-2" controlId="name">
           <Form.Label>Nom de la recette :</Form.Label>
@@ -144,13 +148,13 @@ const UpdateRecipeScreen = () => {
 
         <Form.Group className="my-2" controlId="instructions">
           <Form.Label>La préparation :</Form.Label>
-          <Form.Control
+          <textarea
             className="form-control input-lg"
             type="text"
             name="instructions"
             onChange={handleChange}
             placeholder="Ecrire les diverses étapes de la recette"
-          ></Form.Control>
+          ></textarea>
         </Form.Group>
 
         <Form.Group className="my-2" controlId="makingTime">

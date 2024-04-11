@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { Card, Button, ListGroup, Col } from "react-bootstrap";
 import bookImage from "../assets/book.png";
-
 import { IoReturnUpBack } from "react-icons/io5";
 import { useDeleteRecipeMutation } from "../slices/recipesApiSlice";
-
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-
+import { useNavigate } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
 function RecipeCard({ recipe }) {
@@ -18,16 +16,17 @@ function RecipeCard({ recipe }) {
 
   const { userInfo } = useSelector((state) => state.auth);
   console.log("RecipeCard userInfo" + JSON.stringify(userInfo, null, 2));
-  //console.log("RecipeCard recipe" + JSON.stringify(recipe, null, 2));
+  console.log("RecipeCard recipe" + JSON.stringify(recipe, null, 2));
 
   const [deleteRecipe, { isLoading, isError, isSuccess, error }] = useDeleteRecipeMutation();
+
+  const navigate = useNavigate();
 
   const handleDeleteRecipe = () => {
     console.log("click");
     console.log('Recipe object:', recipe);
     console.log('Recipe ID:', recipe._id);
 
-    
     deleteRecipe(recipe._id)
       .then((response) => {
         console.log("Recipe deletion response:", response);
@@ -43,6 +42,14 @@ function RecipeCard({ recipe }) {
 
   const toggleLike = () => {
     setLiked(!liked);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    console.log("click Update");
+    console.log('Recipe object Update:', recipe);
+    console.log('Recipe ID Update:', recipe._id); 
+    navigate("/oneRecipeAuth/${recipe._id}");
   };
 
   return (
@@ -138,12 +145,12 @@ function RecipeCard({ recipe }) {
               
           {userInfo && userInfo.username === recipe.pseudo && (
             <>
-              <Link
-                to={`/edit-recipe/${recipe.id}`}
+              <Button
+                onClick={handleUpdate}
                 className="btn btn-success mx-2 mt-2"            
               >
                 Modifier
-              </Link>
+              </Button>
               <Button
                 onClick={handleDeleteRecipe}
                 className="btn btn-danger rounded mx-2 mt-2"
