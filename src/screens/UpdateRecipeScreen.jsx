@@ -98,6 +98,7 @@ const UpdateRecipeScreen = () => {
             className="form-control input-lg"
             type="text"
             name="name"
+            value={recipe.name}
             onChange={handleChange}
             placeholder="Ecrire le nom de la recette"
           ></Form.Control>
@@ -152,6 +153,7 @@ const UpdateRecipeScreen = () => {
             className="form-control input-lg"
             type="text"
             name="instructions"
+            value={recipe.instructions}
             onChange={handleChange}
             placeholder="Ecrire les diverses étapes de la recette"
           ></textarea>
@@ -163,6 +165,7 @@ const UpdateRecipeScreen = () => {
             className="form-control input-lg"
             type="number"
             name="makingTime"
+            value={recipe.makingTime}
             onChange={handleChange}
             placeholder="0"
             min="0"
@@ -175,6 +178,7 @@ const UpdateRecipeScreen = () => {
             className="form-control input-lg"
             type="number"
             name="cookingTime"
+            value={recipe.cookingTime}
             onChange={handleChange}
             placeholder="0"
             min="0"
@@ -187,6 +191,7 @@ const UpdateRecipeScreen = () => {
             className="form-control input-lg"
             type="text"
             name="comments"
+            value={recipe.comments}
             onChange={handleChange}
             placeholder="Ecrire les vertues de la recette"
           ></Form.Control>
@@ -198,6 +203,7 @@ const UpdateRecipeScreen = () => {
             className="form-control input-lg"
             type="text"
             name="pseudo"
+            value={recipe.pseudo}
             onChange={handleChange}
             placeholder="ex: Doudou"
           ></Form.Control>
@@ -209,6 +215,7 @@ const UpdateRecipeScreen = () => {
             className="form-control input-lg"
             type="text"
             name="imageUrl"
+            value={recipe.imageUrl}
             onChange={handleChange}
             placeholder="Importer le lien url de votre image"
           ></Form.Control>
@@ -227,7 +234,7 @@ const UpdateRecipeScreen = () => {
         </Form.Group>
 
         <Button type="submit" variant="primary" className="mt-3 w-100">
-          Enregistrer la recette
+          Modifer la recette
         </Button>
 
         {isLoading && <Loader />}
