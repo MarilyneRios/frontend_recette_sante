@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 function RecipeCard({ recipe }) {
   const [liked, setLiked] = useState(false);
   const [isBigCard, setIsBigCard] = useState(false);
-  //const [recipe, setRecipe] = useState("");
+  
 
   const { userInfo } = useSelector((state) => state.auth);
   console.log("RecipeCard userInfo" + JSON.stringify(userInfo, null, 2));
@@ -49,7 +49,9 @@ function RecipeCard({ recipe }) {
     console.log("click Update");
     console.log('Recipe object Update:', recipe);
     console.log('Recipe ID Update:', recipe._id); 
-    navigate("/oneRecipeAuth/${recipe._id}");
+    //navigate("/oneRecipeAuth/${recipe._id}");
+    navigate(`/oneRecipeAuth/${recipe._id}`);
+
   };
 
   return (
