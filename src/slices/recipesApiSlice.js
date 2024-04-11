@@ -58,6 +58,13 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
         providesTags: ['Recipes'],
       }),
     }),
+    viewRecipeAuth: builder.query({
+      query: (id) => ({
+        url: `${RECIPES_URL}/oneRecipeAuth/${id}`,
+        method: 'GET',
+        providesTags: ['Recipes'],
+      }),
+    }),
 
 
     searchRecipe: builder.query({
@@ -111,6 +118,7 @@ export const {
 
   useAllRecipesAuthQuery,
   useOneRecipeAuthQuery,
+  useViewRecipeAuthQuery,
   useSearchRecipeQuery,
   useFilterRecipeQuery,
   useAllRecipesFavoriteQuery,

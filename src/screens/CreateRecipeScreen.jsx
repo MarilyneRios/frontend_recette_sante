@@ -119,13 +119,13 @@ const CreateRecipeScreen = () => {
      
         <Form.Group className='my-2' controlId='instructions'>
         <Form.Label>La préparation :</Form.Label>
-        <Form.Control
+        <textarea
        className="form-control input-lg"
             type="text"
             name="instructions"
             onChange={handleChange}
             placeholder="Ecrire les diverses étapes de la recette"
-        ></Form.Control>
+        ></textarea>
       </Form.Group>
 
       <Form.Group className='my-2' controlId='makingTime'>
@@ -162,20 +162,6 @@ const CreateRecipeScreen = () => {
             placeholder="Ecrire les vertues de la recette"
         ></Form.Control>
       </Form.Group>
-{/*
-      <Form.Group className='my-2' controlId='pseudo'>
-        <Form.Label>Le pseudo de l&apos;auteur :</Form.Label>
-        <Form.Control
-       className="form-control input-lg"
-            type="text"
-            name="pseudo"
-            value={recipe.pseudo} 
-            onChange={handleChange}
-            placeholder="{recipe.pseudo} "
-            disabled 
-        ></Form.Control>
-      </Form.Group>*/}
-
       <Form.Group className='my-2' controlId='imageUrl'>
         <Form.Label>Image de la recette :</Form.Label>
         <Form.Control
@@ -212,3 +198,40 @@ export default CreateRecipeScreen
   const [pseudo, setPseudo] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 */
+/*
+      <Form.Group className="my-2" controlId="ingredients">
+          <Form.Label>Les ingrédients :</Form.Label>
+          {recipe &&
+            recipe.ingredients &&
+            recipe.ingredients.map((ingredient, index) => (
+              <input
+                key={index}
+                className="form-control input-lg"
+                type="text"
+                name="ingredients"
+                value={ingredient}
+                onChange={(e) => handleIngredientChange(e, index)}
+                placeholder="Ecrire un ingrédient"
+              />
+            ))}
+          <Button
+            className="btn-primary w-100 mx-2"
+            onClick={addIngredient}
+            type="button"
+          >
+            Ajouter un ingrédient
+          </Button>
+        </Form.Group> 
+        
+        ET
+        
+  //add  une étape de la préparation
+  const handleInstructionChange = (e, index) => {
+    const newInstrution = [...recipe.instructions];
+    newInstrution[index] = e.target.value;
+    setRecipe({ ...recipe, instructions: newInstrution });
+  };
+
+  const addInstruction = () => {
+    setRecipe({ ...recipe, instructions: [...recipe.instructions, ""] });
+  };*/
