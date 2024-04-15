@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 // Initialisation de l'état initial pour le slice Redux
 const initialState = {
   recipeInfo: {
+    _id: "",
     name: "",
     category: "",
     ingredients: [],

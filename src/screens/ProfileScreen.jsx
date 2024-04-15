@@ -24,7 +24,8 @@ const ProfileScreen = () => {
     setUsername(userInfo.username);
     setEmail(userInfo.email);
   }, [userInfo.email, userInfo.username]);
-
+  
+// mise à jour
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,6 +54,7 @@ const ProfileScreen = () => {
       <h1>Mise à jour du profil</h1>
 
       <Form onSubmit={handleSubmit}>
+      {/* A supprimer quand tout fonctionnera */}
       <Form.Group className='my-2' controlId='username'>
           <Form.Label>Pseudo</Form.Label>
           <Form.Control

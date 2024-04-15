@@ -11,14 +11,18 @@ import {
 } from "../slices/recipesApiSlice";
 import { useNavigate } from 'react-router-dom';
 
+
 const UpdateRecipeScreen = () => {
   const { id } = useParams();
+  console.log(`id params : ${id}`)
 
   const { userInfo } = useSelector((state) => state.auth);
+
   const [recipe, setRecipe] = useState({
+    id: id,
     name: "",
     category: "",
-    ingredients: [],
+    ingredients: [""],
     instructions: "",
     makingTime: "",
     cookingTime: "",
@@ -27,33 +31,36 @@ const UpdateRecipeScreen = () => {
     imageUrl: "",
     userId: window.localStorage.getItem("id"),
   });
-
+ 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setRecipe({ ...recipe, [name]: value });
-  };
+  const [updateRecipe, { isLoading }] = useUpdateRecipeMutation(id);
 
   //affiche la recette
-  const { data } = useOneRecipeAuthQuery(id);
+  const {data} = useOneRecipeAuthQuery(id);
 
+  const handleChange = (e) => {
+     setRecipe({ ...recipe, [e.target.name]: e.target.value });
+  };
+  
+  // Pour récupérer les datas de la recette
   useEffect(() => {
     if (data) {
-      setRecipe({
-        ...recipe,
-        name: data.name,
-        category: data.category,
-        ingredients: data.ingredients,
-        instructions: data.instructions,
-        makingTime: data.makingTime,
-        cookingTime: data.cookingTime,
-        comments: data.comments,
-        pseudo: data.pseudo,
-        imageUrl: data.imageUrl,
-      });
+      console.log("Data useEffect : ", data); 
+      console.log("data.id useEffect : ", data._id); 
+      setRecipe((prevRecipe) => ({
+        ...prevRecipe,
+        _id: data._id || "",
+        name: data.name || "",
+        category: data.category || "",
+        ingredients: data.ingredients || [""],
+        instructions: data.instructions || "",
+        makingTime: data.makingTime || "",
+        cookingTime: data.cookingTime || "",
+        comments: data.comments || "",
+        pseudo: data.pseudo || "",
+        imageUrl: data.imageUrl || "",
+      }));
     }
   }, [data]);
 
@@ -67,25 +74,35 @@ const UpdateRecipeScreen = () => {
   const addIngredient = () => {
     setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
   };
-
-
-  //mise à jour
-  const [updateRecipe, { isLoading, isError, isSuccess, error }] = useUpdateRecipeMutation();
  
-
-  // Fonction pour gérer la soumission du formulaire
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log("Submitting recipe:", recipe);
-    try {
-      const result = await updateRecipe(recipe).unwrap();
-      //console.log("Recipe created successfully:", result);
-      toast.success("Recette modifiée avec succès.");
-      navigate("/");
-    } catch (error) {
-      // console.error("Error creating recipe:", error);
-      toast.error("Erreur lors de la modification de la recette.");
-    }
+   
+try {
+  console.log("Recipe ID: ", id);
+  const res = await updateRecipe({
+    id: recipe._id,
+    name: recipe.name,
+    category: recipe.category,
+    ingredients: recipe.ingredients,
+    instructions: recipe.instructions,
+    makingTime: recipe.makingTime,
+    cookingTime: recipe.cookingTime,
+    comments: recipe.comments,
+    pseudo: recipe.pseudo,
+    imageUrl: recipe.imageUrl,
+  }).unwrap();
+  
+  console.log(res);
+  console.log("Recipe after update: ", recipe); 
+  toast.success("Recette modifiée avec succès.");
+  navigate("/");
+} catch (error) {
+  console.error("Error updating recipe: ", error);
+  toast.error("Erreur lors de la modification de la recette.");
+}
+
   };
 
   return (

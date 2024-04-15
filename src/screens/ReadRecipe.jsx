@@ -84,9 +84,9 @@ function ReadRecipe() {
     e.preventDefault();
     console.log("click Update");
     console.log("Recipe object Update:", recipe);
-    console.log("Recipe ID Update:", recipe._id);
+    console.log("Recipe ID Update:", recipe.id);
 
-    navigate(`/oneRecipeAuth/${recipe._id}`);
+    navigate(`/oneRecipeAuth/${recipe.id}`);
   };
 
   return (
