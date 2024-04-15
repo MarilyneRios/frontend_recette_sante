@@ -80,11 +80,11 @@ const UpdateRecipeScreen = () => {
     try {
       const result = await updateRecipe(recipe).unwrap();
       //console.log("Recipe created successfully:", result);
-      toast.success("Recette créée avec succès.");
+      toast.success("Recette modifiée avec succès.");
       navigate("/");
     } catch (error) {
       // console.error("Error creating recipe:", error);
-      toast.error("Erreur lors de la création de la recette.");
+      toast.error("Erreur lors de la modification de la recette.");
     }
   };
 
