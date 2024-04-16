@@ -68,9 +68,9 @@ function ReadRecipe() {
   const handleDeleteRecipe = () => {
     console.log("click");
     console.log("Recipe object:", recipe);
-    console.log("Recipe ID:", recipe._id);
+    console.log("Recipe ID:", recipe.id);
 
-    deleteRecipe(recipe._id)
+    deleteRecipe(recipe.id)
       .then((response) => {
         console.log("Recipe deletion response:", response);
       })

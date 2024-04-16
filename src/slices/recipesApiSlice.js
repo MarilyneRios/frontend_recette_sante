@@ -74,8 +74,8 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
       }),
     }),
     filterRecipe: builder.query({
-      query: (query) => ({
-        url: `${RECIPES_URL}/filterRecipe/${query}`,
+      query: (category) => ({
+        url: `${RECIPES_URL}/filterRecipe/${category}`,
         method: 'GET',
       }),
     }),

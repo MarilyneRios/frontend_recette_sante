@@ -213,8 +213,8 @@ try {
             placeholder="Ecrire les vertues de la recette"
           ></Form.Control>
         </Form.Group>
-
-        <Form.Group className="my-2" controlId="pseudo">
+            {/*
+         <Form.Group className="my-2" controlId="pseudo">
           <Form.Label>Le pseudo de l&apos;auteur :</Form.Label>
           <Form.Control
             className="form-control input-lg"
@@ -225,6 +225,8 @@ try {
             placeholder="ex: Doudou"
           ></Form.Control>
         </Form.Group>
+             */}
+
 
         <Form.Group className="my-2" controlId="imageUrl">
           <Form.Label>Image de la recette :</Form.Label>

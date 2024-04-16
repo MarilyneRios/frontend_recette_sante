@@ -4,13 +4,16 @@ import { useAllRecipesAuthQuery } from "../slices/recipesApiSlice";
 import { useSelector } from "react-redux";
 import ReadRecipeS from "./ReadRecipeS";
 import PaginationComponent from "../components/PaginationComponent";
+import {  useCategory } from '../contexts/CategoryContext';
 
 const HomeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const result = useAllRecipesAuthQuery();
   const recipes = result.data || [];
   const [currentPage, setCurrentPage] = useState(1);
-  const [bigCardIndex, setBigCardIndex] = useState(null);
+  const { selectedCategory } = useCategory();
+
+  console.log('HomeScreen setSelectedCategory : ' + selectedCategory)
 
   return (
     <div>
@@ -22,16 +25,17 @@ const HomeScreen = () => {
             <ReadRecipeS 
             recipes={recipes} 
             currentPage={currentPage}
-            setBigCardIndex={setBigCardIndex} />
+            selectedCategory={selectedCategory} 
+             />
           </div>
           <div>
-          {bigCardIndex === null && (
+          
             <PaginationComponent 
               recipes={recipes} 
               currentPage={currentPage} 
               setCurrentPage={setCurrentPage} 
             />
-          )}
+       
           </div>
         </div>
       )}
