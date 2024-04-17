@@ -5,13 +5,12 @@ import { CgProfile } from "react-icons/cg";
 import { TiUserAddOutline } from "react-icons/ti";
 import { BsBookmarkPlus } from "react-icons/bs";
 import { GoPlusCircle } from "react-icons/go";
-
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-
+import SearchBar from './SearchBar';
 import {  useCategory } from '../contexts/CategoryContext';
  
 
@@ -87,7 +86,7 @@ const Header = () => {
                   <NavDropdown
                     title="Par catégories"
                     id="category"
-                    className="mx-2"
+                    className="mx-5"
                   >
                    <NavDropdown.Item
                       onClick={() => handleCategorySelect("Toutes")}
@@ -120,6 +119,7 @@ const Header = () => {
                       Boissons
                     </NavDropdown.Item>
                   </NavDropdown>
+                  <SearchBar/>
                 </>
               ) : (
                 <>

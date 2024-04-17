@@ -63,16 +63,16 @@ function RecipeCard({ recipe }) {
           style={{ width: "10rem" }}
         />
         <Card.Body>
-          <Card.Title className="text-center fs-3">{recipe.name}</Card.Title>
-          <Card.Text className="text-center">
+          <Card.Title className="text-center fs-4">{recipe.name}</Card.Title>
+          <Card.Text className="text-center fs-5">
             {recipe.category}
           </Card.Text>
         
           <Card.Text className="text-center">
-            Les bienfaits: {recipe.comments}
+            Les bienfaits : {recipe.comments}
           </Card.Text>
-          <Card.Text className="text-center fs-5">
-            <em>Auteur : {recipe.pseudo}</em>
+          <Card.Text className="text-center ">
+            <em>Auteur : {recipe.pseudo || 'inconnu'}</em>
           </Card.Text>
 
           <div className="d-flex justify-content-center">

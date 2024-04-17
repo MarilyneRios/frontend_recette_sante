@@ -101,8 +101,8 @@ function ReadRecipe() {
           <Card.Img
               variant="right"
               src={recipe.imageUrl || bookImage}
-              style={{ maxWidth: "20rem", boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)" }}
-              className="rounded mt-5 mx-5 order-0 order-md-1"
+              style={{ maxWidth: "20rem", boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)", marginLeft:"5rem" }}
+              className="rounded my-5 order-0 order-md-1"
             />
         
             <Card.Body className="flex-grow-1 text-right order-0 order-md-1">
@@ -133,36 +133,40 @@ function ReadRecipe() {
                 )}
               </Button>
   
-              <Card.Title className="text-center fs-3">{recipe.name}</Card.Title>
+              <Card.Title className="text-center fs-3"><strong>{recipe.name}</strong></Card.Title>
               <Card.Text className="text-center fs-5">
               {recipe.category}
               </Card.Text>
-  
+              <Card.Text className="text-center fs-5">
+              <em>Ingrédients : </em> 
+              </Card.Text>
               <ListGroup variant="flush" className="text-center">
-                {" "}
-                <em>Ingrédients : </em>
+
                 {recipe.ingredients
                   ? recipe.ingredients.map((ingredient, index) => (
                       <ListGroup.Item key={index} style={{ border: "none" }}>
-                        {ingredient}
+                       - {ingredient}
                       </ListGroup.Item>
                     ))
                   : ""}
               </ListGroup>
-  
-              <Card.Text className="text-center">
-                <strong>Préparation : </strong> {recipe.instructions}
+              <Card.Text className="text-center fs-5">
+              <em>Préparation : </em> 
               </Card.Text>
               <Card.Text className="text-center">
-                <strong>Temps de préparation : </strong>{recipe.makingTime} min
+                {recipe.instructions}
+              </Card.Text>
+              <Card.Text className="text-center fs-6">
+                <span className="mx-2"><strong>Temps de préparation : </strong>{recipe.makingTime} min </span> <span className="mx-2"><strong>Temps de cuisson :  </strong> {recipe.cookingTime} min</span>
+              </Card.Text>
+
+              <Card.Text className="text-center fs-5">
+              <em>Bienfaits : </em> 
               </Card.Text>
               <Card.Text className="text-center">
-                <strong>Temps de cuisson :  </strong> {recipe.cookingTime} min
+                {recipe.comments}
               </Card.Text>
-              <Card.Text className="text-center">
-                <strong>Bienfaits :  </strong>{recipe.comments}
-              </Card.Text>
-              <Card.Text className="text-center">
+              <Card.Text className="text-center fs-5">
                 Auteur : {recipe.pseudo}
               </Card.Text>
   
@@ -170,7 +174,7 @@ function ReadRecipe() {
                 <div className="d-flex justify-content-center align-items-center">
                   <Button
                     onClick={handleUpdate}
-                    className="btn btn-success mx-2 mt-2 "
+                    className="btn btn-primary mx-2 mt-2 "
                   >
                     Modifier
                   </Button>
