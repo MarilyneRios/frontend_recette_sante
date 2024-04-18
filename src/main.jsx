@@ -33,7 +33,9 @@ const router = createBrowserRouter(
         <Route path='/profile' element={<ProfileScreen />} />
         <Route path='/oneRecipeAuth/:id' element={<UpdateRecipeScreen />} />
         <Route path='/createRecipe' element={<CreateRecipeScreen />} />
-        <Route path='/addRecipeFavorite/:id' element={<SavedRecipeScreen />} />
+
+        <Route path='/allRecipesFavorite' element={<SavedRecipeScreen />} />{/* favorite */}
+        
         <Route path='/allRecipesAuth' element={<ReadRecipeS />} />
         <Route path='/viewRecipeAuth/:id' element={<ReadRecipe />} />
       </Route>

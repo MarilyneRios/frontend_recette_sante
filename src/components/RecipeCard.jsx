@@ -9,24 +9,20 @@ import { useNavigate } from 'react-router-dom';
 function RecipeCard({ recipe }) {
   const [liked, setLiked] = useState(false);
 
+
   const { userInfo } = useSelector((state) => state.auth);
-  console.log("RecipeCard userInfo" + JSON.stringify(userInfo, null, 2));
-  console.log("RecipeCard recipe" + JSON.stringify(recipe, null, 2));
 
   const navigate = useNavigate();
 
   const handleReadRecipe = async (e) => {
     e.preventDefault();
-    console.log("click Update");
-    console.log('Recipe object Update:', recipe);
-    console.log('Recipe ID Update:', recipe._id); 
-
    navigate(`/viewRecipeAuth/${recipe._id}`);
   };
 
-
-  const toggleLike = () => {
+  const toggleLike = async (e) => {
+    e.preventDefault();
     setLiked(!liked);
+   // ajouter une recette dans les favoris avec cette route`/addRecipeFavorite/${recipe._id}`;
   };
 
 

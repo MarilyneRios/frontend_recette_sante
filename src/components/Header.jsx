@@ -71,7 +71,7 @@ const Header = () => {
                       </NavDropdown.Item>
                     </LinkContainer>
 
-                    <LinkContainer to="/addRecipeFavorite/:id">
+                    <LinkContainer to="/allRecipesFavorite">
                       <NavDropdown.Item>
                         <BsBookmarkPlus /> Mes favoris
                       </NavDropdown.Item>

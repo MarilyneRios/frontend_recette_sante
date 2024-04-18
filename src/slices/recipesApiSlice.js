@@ -28,21 +28,6 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
       invalidatesTags:["Recipes"],
     }),
 
-
-    savedRecipe: builder.mutation({
-      query: (id) => ({
-        url: `${RECIPES_URL}/addRecipeFavorite/${id}`,
-        method: 'POST',
-      }),
-    }),
-    unsavedRecipe: builder.mutation({
-      query: (id) => ({
-        url: `${RECIPES_URL}/removeRecipeFavorite/${id}`,
-        method: 'DELETE',
-      }),
-    }),
-
-
     allRecipesAuth: builder.query({
       query: () => ({
         url: `${RECIPES_URL}/allRecipesAuth`,
@@ -111,17 +96,16 @@ export const {
   useAddRecipeMutation,
   useUpdateRecipeMutation,
   useDeleteRecipeMutation,
-  useSavedRecipeMutation,
-  useUnsavedRecipeMutation,
 
   useAllRecipesAuthQuery,
   useOneRecipeAuthQuery,
   useViewRecipeAuthQuery,
+
   useSearchRecipeQuery,
   useFilterRecipeQuery,
+
   useAllRecipesFavoriteQuery,
   useOneRecipesFavoriteQuery,
-
   useAddRecipeFavoriteMutation,
   useRemoveRecipeFavoriteMutation,
 } = recipesApiSlice;

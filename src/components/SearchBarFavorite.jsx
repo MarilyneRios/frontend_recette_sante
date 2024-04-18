@@ -1,8 +1,9 @@
-// SearchBar.jsx
+// SearchBarFavorite.jsx
 import { Navbar, Form, Button, Row, Col } from 'react-bootstrap';
 import { useSearchContext } from "../contexts/SearchContext";
+import { FaHeart } from "react-icons/fa";
 
-const SearchBar = () => {
+const SearchBarFavorite = () => {
     const { searchQuery, setSearchQuery, setSubmittedSearchQuery  } = useSearchContext();   
    
     
@@ -21,7 +22,11 @@ const SearchBar = () => {
         <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect className="rounded justify-content-center mt-3">
             <Form onSubmit={handleSearch} className="w-100">
                 <Row className="justify-content-center">
-                    <Col xs={10} sm={8} md={6} lg={4} className="mx-3 my-1"> 
+                <Col xs={10} sm={8} md={6} lg={4} className="mx-3 mt-2 text-white"> 
+                <h5>Mes recettes favorites  <FaHeart size={25} color="red" className='mx-1' /></h5>
+                </Col>
+                
+                    <Col xs={10} sm={8} md={6} lg={4} className="mx-1 mb-2"> 
                         <Form.Control
                             type="text"
                             placeholder="Rechercher une recette"
@@ -40,4 +45,4 @@ const SearchBar = () => {
     
 };
 
-export default SearchBar;
+export default SearchBarFavorite;
