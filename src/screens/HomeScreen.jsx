@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import ReadRecipeS from "./ReadRecipeS";
 import PaginationComponent from "../components/PaginationComponent";
 import {  useCategory } from '../contexts/CategoryContext';
+import { useSearchContext } from "../contexts/SearchContext";
+
 
 const HomeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -12,8 +14,10 @@ const HomeScreen = () => {
   const recipes = result.data || [];
   const [currentPage, setCurrentPage] = useState(1);
   const { selectedCategory } = useCategory();
-
   console.log('HomeScreen setSelectedCategory : ' + selectedCategory)
+
+  const { searchQuery, setSearchQuery } = useSearchContext();
+  console.log("HomeSecreen searchQuery et setSearchQuery : " + searchQuery + setSearchQuery );
 
   return (
     <div>
@@ -26,6 +30,8 @@ const HomeScreen = () => {
             recipes={recipes} 
             currentPage={currentPage}
             selectedCategory={selectedCategory} 
+            searchQuery={searchQuery} 
+            setSearchQuery={setSearchQuery}
              />
           </div>
           <div>

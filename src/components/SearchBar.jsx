@@ -1,29 +1,43 @@
-import Navbar from 'react-bootstrap/Navbar';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// SearchBar.jsx
+import { Navbar, Form, Button, Row, Col } from 'react-bootstrap';
+import { useSearchContext } from "../contexts/SearchContext";
 
 const SearchBar = () => {
+    const { searchQuery, setSearchQuery, setSubmittedSearchQuery  } = useSearchContext();   
+   
+    
+    const handleChange = (e) => {
+        setSearchQuery(e.target.value);
+        console.log("SearchBar handleChange"+ setSearchQuery)
+    };
 
-  return (
-<Navbar className="bg-body-dark justify-content-between">
-      <Form inline>
-        <Row>
-          <Col xs="auto">
-            <Form.Control
-              type="text"
-              placeholder="Rechercher une recette"
-              className=" mr-sm-2"
-            />
-          </Col>
-          <Col xs="auto">
-            <Button type="submit">Rechercher</Button>
-          </Col>
-        </Row>
-      </Form>
-    </Navbar>
-  );
-}
+    const handleSearch = (e) => {
+        e.preventDefault();
+        console.log("Recherche effectuée avec la requête:", searchQuery);
+        setSubmittedSearchQuery(searchQuery);
+    };
 
-export default SearchBar
+    return (
+        <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect className="rounded justify-content-center mt-3">
+            <Form onSubmit={handleSearch} className="w-100">
+                <Row className="justify-content-center">
+                    <Col xs={10} sm={8} md={6} lg={4} className="mx-3"> 
+                        <Form.Control
+                            type="text"
+                            placeholder="Rechercher une recette"
+                            className="mx-auto mt-3 mt-sm-0"
+                            value={searchQuery}
+                            onChange={handleChange}
+                        />
+                    </Col>
+                    <Col xs={10} sm={4} md={2} className="mx-3"> 
+                        <Button type="submit" className='mx-auto d-block'>Rechercher</Button>
+                    </Col>
+                </Row>
+            </Form>
+        </Navbar>
+    );
+    
+};
+
+export default SearchBar;

@@ -1,3 +1,4 @@
+////src>contexts>CategoryContext.jsx
 import React, { createContext, useState, useContext } from 'react';
 
 // Créez un contexte pour selectedCategory

@@ -10,9 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-import SearchBar from './SearchBar';
 import {  useCategory } from '../contexts/CategoryContext';
- 
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -32,6 +30,7 @@ const Header = () => {
     console.log('après setSelectedCategory : ' + category)
     }
   };
+
 
   //Déconnexion
   const [logoutApiCall] = useLogoutMutation();
@@ -119,8 +118,7 @@ const Header = () => {
                       Boissons
                     </NavDropdown.Item>
                   </NavDropdown>
-                  <SearchBar/>
-                </>
+                  </>
               ) : (
                 <>
                   <LinkContainer to="/login">

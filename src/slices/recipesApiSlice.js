@@ -66,7 +66,6 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
       }),
     }),
 
-
     searchRecipe: builder.query({
       query: (query) => ({
         url: `${RECIPES_URL}/searchRecipe/${query}`,
@@ -78,8 +77,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
         url: `${RECIPES_URL}/filterRecipe/${category}`,
         method: 'GET',
       }),
-    }),
-
+    }),    
     
     allRecipesFavorite: builder.query({
       query: () => ({
