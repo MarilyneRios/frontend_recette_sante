@@ -21,7 +21,10 @@ const SearchBar = () => {
         <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect className="rounded justify-content-center mt-3">
             <Form onSubmit={handleSearch} className="w-100">
                 <Row className="justify-content-center">
-                    <Col xs={10} sm={8} md={6} lg={4} className="mx-3 my-1"> 
+                <Col xs={10} sm={8} md={6} lg={4} className="mx-3 mt-2 text-white text-center"> 
+                <h5 >La liste des recettes </h5>
+                </Col>
+                    <Col xs={10} sm={8} md={6} lg={4} className="mx-3 mx-1"> 
                         <Form.Control
                             type="text"
                             placeholder="Rechercher une recette"

@@ -12,6 +12,7 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import { IoReturnUpBack } from "react-icons/io5";
 import { useDeleteRecipeMutation } from "../slices/recipesApiSlice";
+import BackButton from "../components/BackButton";
 
 function ReadRecipe() {
   const { id } = useParams();
@@ -66,9 +67,6 @@ function ReadRecipe() {
   const navigate = useNavigate();
 
   const handleDeleteRecipe = () => {
-    console.log("click");
-    console.log("Recipe object:", recipe);
-    console.log("Recipe ID:", recipe.id);
 
     deleteRecipe(recipe.id)
       .then((response) => {
@@ -82,10 +80,6 @@ function ReadRecipe() {
   //modifier la recette
   const handleUpdate = async (e) => {
     e.preventDefault();
-    console.log("click Update");
-    console.log("Recipe object Update:", recipe);
-    console.log("Recipe ID Update:", recipe.id);
-
     navigate(`/oneRecipeAuth/${recipe.id}`);
   };
 
@@ -97,24 +91,16 @@ function ReadRecipe() {
         <FormContainerRecipe className="d-flex align-items-center">
   
           <Card className="w-100 d-flex flex-column flex-md-row align-items-center">
-            
+            <BackButton/>
           <Card.Img
               variant="right"
               src={recipe.imageUrl || bookImage}
-              style={{ maxWidth: "20rem", boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)", marginLeft:"5rem" }}
-              className="rounded my-5 order-0 order-md-1"
+              style={{ maxWidth: "20rem", boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)",marginLeft:"3rem", marginTop: "3.5rem"  }}
+              className="rounded  order-0 order-md-1 mx-5"
             />
         
             <Card.Body className="flex-grow-1 text-right order-0 order-md-1">
-              <Link
-                to={`/`}
-                onClick={toggleLike}
-                className="btn btn-dark mx-2 mt-2 fs-4 border border-dark rounded"
-                style={{ position: "absolute", top: 0, left: 0 }}
-              >
-                <IoReturnUpBack size={25}/>
-              </Link>
-  
+            
               <Button
                 variant="outline-white"
                 onClick={toggleLike}

@@ -16,7 +16,7 @@ function RecipeCard({ recipe }) {
 
   const { userInfo } = useSelector((state) => state.auth);
   const [liked, setLiked] = useState(false);
-  const {data: favoriteRecipes} = useAllRecipesFavoriteQuery()
+  const {data: favoriteRecipes, refetch: refetchFavoriteRecipes} = useAllRecipesFavoriteQuery();
   const [addRecipeFavorite] = useAddRecipeFavoriteMutation();
   const [removeRecipeFavorite] = useRemoveRecipeFavoriteMutation();
 
@@ -24,8 +24,6 @@ function RecipeCard({ recipe }) {
 
   //Favoris
   useEffect(() => {
-    console.log("favoriteRecipes useEffect",favoriteRecipes);
-    console.log("Checking if recipe is in favoriteRecipes"); 
     if (favoriteRecipes && favoriteRecipes.some(favRecipe => favRecipe._id === recipe._id)) {
       console.log("Recipe is in favoriteRecipes");
       setLiked(true);
@@ -61,6 +59,7 @@ function RecipeCard({ recipe }) {
       addRecipeFavorite(recipe._id)
       .then((response) => {
         console.log("RecipeFavorite add:", response);
+        refetchFavoriteRecipes(); 
       })
       .catch((error) => {
         console.error("Error add RecipeFavorite:", error);
@@ -75,6 +74,7 @@ function RecipeCard({ recipe }) {
     removeRecipeFavorite(recipe._id)
       .then((response) => {
         console.log("RecipeFavorite remove:", response);
+        refetchFavoriteRecipes(); 
       })
       .catch((error) => {
         console.error("Error remove RecipeFavorite:", error);
