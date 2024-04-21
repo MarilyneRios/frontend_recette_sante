@@ -37,6 +37,8 @@ const CreateRecipeScreen = () => {
       setRecipe({ ...recipe, [name]: value });
   };
 
+ 
+
   //upload image
   const convertToBase64 = (file) => {
     console.log("convertToBase64", file);
@@ -49,6 +51,35 @@ const CreateRecipeScreen = () => {
     return data;
   };
 
+ //Réduire la taille de l'image
+ const resizeImage = (file) => {
+  return new Promise((resolve, reject) => {
+    const img = document.createElement('img');
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      // Set the canvas dimensions to the desired size
+      canvas.width = 250;
+      canvas.height = 250;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(resolve, file.type);
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
+  });
+};
+
+const handleUpdateImage = async (file) => {
+  try {
+    const resizedImage = await resizeImage(file);
+    const base64Image = await convertToBase64(resizedImage);
+    setRecipe({ ...recipe, imageUrl: base64Image });
+  } catch (error) {
+    console.error("Error converting image to base64:", error);
+  }
+};
+
+ /*
   const handleUpdateImage = async (file) => {
     try {
       const base64Image = await convertToBase64(file);
@@ -56,7 +87,7 @@ const CreateRecipeScreen = () => {
     } catch (error) {
       console.error("Error converting image to base64:", error);
     }
-  };
+  };*/
 
    //ajout ingrédient
   const handleIngredientChange = (e, index) => {
