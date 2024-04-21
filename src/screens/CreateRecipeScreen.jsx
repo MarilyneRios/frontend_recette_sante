@@ -5,14 +5,14 @@ import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { RxCross1 } from "react-icons/rx";
 import { useAddRecipeMutation } from '../slices/recipesApiSlice';
-
+import FileBase64 from "react-file-base64";
 import { toast } from 'react-toastify'
 import Loader from '../components/Loader';
 
 const CreateRecipeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
   console.log("createRecipe userInfo" + JSON.stringify(userInfo, null, 2))
-
+  const userId = window.localStorage.getItem("id");
   const [recipe, setRecipe] = useState({
     name: "",
     category: "",
@@ -25,6 +25,8 @@ const CreateRecipeScreen = () => {
     imageUrl: "",
     userId: window.localStorage.getItem("id"),
   });
+  const [file, setFile] = useState("");
+  const [image, setImage] = useState("");
 
   const navigate = useNavigate();
 
@@ -33,6 +35,27 @@ const CreateRecipeScreen = () => {
   const handleChange = (e) => {
       const { name, value } = e.target;
       setRecipe({ ...recipe, [name]: value });
+  };
+
+  //upload image
+  const convertToBase64 = (file) => {
+    console.log("convertToBase64", file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    const data = new Promise((resolve, reject) => {
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+    return data;
+  };
+
+  const handleUpdateImage = async (file) => {
+    try {
+      const base64Image = await convertToBase64(file);
+      setRecipe({ ...recipe, imageUrl: base64Image });
+    } catch (error) {
+      console.error("Error converting image to base64:", error);
+    }
   };
 
    //ajout ingrédient
@@ -180,18 +203,27 @@ const CreateRecipeScreen = () => {
       </Form.Group>
 
 
-      <Form.Group className='my-2' controlId='imageUrl'>
-        <Form.Label>Image de la recette :</Form.Label>
-        <Form.Control
-       className="form-control input-lg"
-            type="text"
+      <Form.Group controlId="imageUrl">
+          <Form.Label>Image de la recette :</Form.Label>
+          <Form.Control
+            type="file"
             name="imageUrl"
-            onChange={handleChange}
-            placeholder="Importer le lien url de votre image"
-        ></Form.Control>
-          {recipe.imageUrl && <img src={recipe.imageUrl} alt="Aperçu de l'image" 
-          style={{ width: '250px', display: 'block', margin: 'auto', marginTop: '1rem' }} />}
-      </Form.Group>
+            accept="image/*"
+            onChange={(e) => handleUpdateImage(e.target.files[0])}
+          />
+          {file && (
+            <img
+              src={file}
+              alt="Aperçu de l'image"
+              style={{
+                width: "250px",
+                display: "block",
+                margin: "auto",
+                marginTop: "1rem",
+              }}
+            />
+          )}
+        </Form.Group>
 
       <Button type='submit' variant='primary' className='mt-3 w-100'>
           Enregistrer la recette
