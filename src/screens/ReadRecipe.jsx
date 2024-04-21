@@ -75,6 +75,7 @@ function ReadRecipe() {
       .catch((error) => {
         console.error("Error deleting recipe:", error);
       });
+      navigate(-1);
   };
 
   //modifier la recette
