@@ -200,3 +200,67 @@ export default HomeScreen;
 **21/ ProfileScreen, modif main et PrivateRoute**
 
 **22/ CreateRecipeScreen et updateRecipeScreen**
+
+**23/ remove ingredient**
+
+  const removeIngredient = (index) => {
+    const newIngredients = [...recipe.ingredients];
+    newIngredients.splice(index, 1);
+    setRecipe({ ...recipe, ingredients: newIngredients });
+  };
+///////////////////////////////////////////////////////////
+  
+        <Form.Group className='my-2' controlId='ingredients'>
+          <Form.Label>Les ingrédients :</Form.Label>
+          {/* Affichage des champs d'ingrédients avec la possibilité de supprimer */}
+          {recipe && recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
+            <div key={index} className="d-flex mb-2">
+              <input
+                className="form-control input-lg"
+                type="text"
+                value={ingredient}
+                onChange={(e) => handleIngredientChange(e, index)}
+                placeholder="Ecrire un ingrédient"
+              />
+              <Button
+                className="btn-danger mx-2"
+                onClick={() => removeIngredient(index)}
+                type="button"
+              >
+                <RxCross1 />
+              </Button>
+            </div>
+          ))}
+          {/* Bouton pour ajouter un ingrédient */}
+          <Button
+            className="btn-primary w-100 mx-2"
+            onClick={addIngredient}
+            type="button"
+          >
+            Ajouter un ingrédient
+          </Button>
+        </Form.Group>
+//////////////////////////////////////
+
+**24/ upload image**
+   <Form.Group controlId="imageUrl">
+          <Form.Label>Image de la recette :</Form.Label>
+          <Form.Control
+            type="file"
+            name="imageUrl"
+            accept="image/*"
+            onChange={(e) => handleUpdateImage(e.target.files[0])}
+          />
+          {file && (
+            <img
+              src={file}
+              alt="Aperçu de l'image"
+              style={{
+                width: "250px",
+                display: "block",
+                margin: "auto",
+                marginTop: "1rem",
+              }}
+            />
+          )}
+        </Form.Group>

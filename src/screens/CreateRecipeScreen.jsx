@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-
+import { RxCross1 } from "react-icons/rx";
 import { useAddRecipeMutation } from '../slices/recipesApiSlice';
 
 import { toast } from 'react-toastify'
@@ -44,6 +44,13 @@ const CreateRecipeScreen = () => {
 
   const addIngredient = () => {
     setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
+  };
+
+  //supp ingrédient
+  const removeIngredient = (index) => {
+    const newIngredients = [...recipe.ingredients];
+    newIngredients.splice(index, 1);
+    setRecipe({ ...recipe, ingredients: newIngredients });
   };
 
   // Fonction pour gérer la soumission du formulaire
@@ -97,17 +104,26 @@ const CreateRecipeScreen = () => {
 
         <Form.Group className='my-2' controlId='ingredients'>
           <Form.Label>Les ingrédients :</Form.Label>
+          {/* Affichage des champs d'ingrédients avec la possibilité de supprimer */}
           {recipe && recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
-            <input
-              key={index}
-              className="form-control input-lg"
-              type="text"
-              name="ingredients"
-              value={ingredient}
-              onChange={(e) => handleIngredientChange(e, index)}
-              placeholder="Ecrire un ingrédient"
-            />
+            <div key={index} className="d-flex mb-2">
+              <input
+                className="form-control input-lg"
+                type="text"
+                value={ingredient}
+                onChange={(e) => handleIngredientChange(e, index)}
+                placeholder="Ecrire un ingrédient"
+              />
+              <Button
+                className="btn-danger mx-2"
+                onClick={() => removeIngredient(index)}
+                type="button"
+              >
+                <RxCross1 />
+              </Button>
+            </div>
           ))}
+          {/* Bouton pour ajouter un ingrédient */}
           <Button
             className="btn-primary w-100 mx-2"
             onClick={addIngredient}
@@ -162,6 +178,8 @@ const CreateRecipeScreen = () => {
             placeholder="Ecrire les vertues de la recette"
         ></Form.Control>
       </Form.Group>
+
+
       <Form.Group className='my-2' controlId='imageUrl'>
         <Form.Label>Image de la recette :</Form.Label>
         <Form.Control
@@ -187,51 +205,3 @@ const CreateRecipeScreen = () => {
 }
 
 export default CreateRecipeScreen
-
-/*  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
-  const [makingTime, setMakingTime] = useState("");
-  const [cookingTime, setCookingTime] = useState("");
-  const [comments, setComments] = useState("");
-  const [pseudo, setPseudo] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-*/
-/*
-      <Form.Group className="my-2" controlId="ingredients">
-          <Form.Label>Les ingrédients :</Form.Label>
-          {recipe &&
-            recipe.ingredients &&
-            recipe.ingredients.map((ingredient, index) => (
-              <input
-                key={index}
-                className="form-control input-lg"
-                type="text"
-                name="ingredients"
-                value={ingredient}
-                onChange={(e) => handleIngredientChange(e, index)}
-                placeholder="Ecrire un ingrédient"
-              />
-            ))}
-          <Button
-            className="btn-primary w-100 mx-2"
-            onClick={addIngredient}
-            type="button"
-          >
-            Ajouter un ingrédient
-          </Button>
-        </Form.Group> 
-        
-        ET
-        
-  //add  une étape de la préparation
-  const handleInstructionChange = (e, index) => {
-    const newInstrution = [...recipe.instructions];
-    newInstrution[index] = e.target.value;
-    setRecipe({ ...recipe, instructions: newInstrution });
-  };
-
-  const addInstruction = () => {
-    setRecipe({ ...recipe, instructions: [...recipe.instructions, ""] });
-  };*/
