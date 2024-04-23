@@ -58,7 +58,9 @@ const Header = () => {
             <Nav className="ms-auto  d-flex align-items-center justify-content-center">
               {userInfo ? (
                 <>
+                <img  src={userInfo.avatar} id="avatar" width="30" className='mx-2'/>
                   <NavDropdown title={userInfo.username} id="username">
+                
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>
                         <CgProfile /> Profile

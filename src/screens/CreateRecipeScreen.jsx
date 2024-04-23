@@ -25,7 +25,6 @@ const CreateRecipeScreen = () => {
     userId: window.localStorage.getItem("id"),
   });
   const [file, setFile] = useState("");
-  const [image, setImage] = useState("");
 
   const navigate = useNavigate();
 

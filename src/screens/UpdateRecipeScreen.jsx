@@ -5,6 +5,7 @@ import FormContainer from "../components/FormContainer";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import { RxCross1 } from "react-icons/rx";
 import {
   useUpdateRecipeMutation,
   useOneRecipeAuthQuery,
@@ -32,12 +33,55 @@ const UpdateRecipeScreen = () => {
     userId: window.localStorage.getItem("id"),
   });
  
+  const [file, setFile] = useState("");
+  
   const navigate = useNavigate();
   
   const [updateRecipe, { isLoading }] = useUpdateRecipeMutation(id);
 
   //affiche la recette
   const {data} = useOneRecipeAuthQuery(id);
+
+  //image 
+  //upload image
+  const convertToBase64 = (file) => {
+    console.log("convertToBase64", file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    const data = new Promise((resolve, reject) => {
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+    return data;
+  };
+
+ //Réduire la taille de l'image
+ const resizeImage = (file) => {
+  return new Promise((resolve, reject) => {
+    const img = document.createElement('img');
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      // Set the canvas dimensions to the desired size
+      canvas.width = 250;
+      canvas.height = 250;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(resolve, file.type);
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
+  });
+};
+
+const handleUpdateImage = async (file) => {
+  try {
+    const resizedImage = await resizeImage(file);
+    const base64Image = await convertToBase64(resizedImage);
+    setRecipe({ ...recipe, imageUrl: base64Image });
+  } catch (error) {
+    console.error("Error converting image to base64:", error);
+  }
+};
 
   const handleChange = (e) => {
      setRecipe({ ...recipe, [e.target.name]: e.target.value });
@@ -75,6 +119,13 @@ const UpdateRecipeScreen = () => {
     setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
   };
  
+    //supp ingrédient
+    const removeIngredient = (index) => {
+      const newIngredients = [...recipe.ingredients];
+      newIngredients.splice(index, 1);
+      setRecipe({ ...recipe, ingredients: newIngredients });
+    };
+
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -141,19 +192,25 @@ try {
 
         <Form.Group className="my-2" controlId="ingredients">
           <Form.Label>Les ingrédients :</Form.Label>
-          {recipe &&
-            recipe.ingredients &&
-            recipe.ingredients.map((ingredient, index) => (
+          {/* Affichage des champs d'ingrédients avec la possibilité de supprimer */}
+          {recipe && recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
+            <div key={index} className="d-flex mb-2">
               <input
-                key={index}
                 className="form-control input-lg"
                 type="text"
-                name="ingredients"
                 value={ingredient}
                 onChange={(e) => handleIngredientChange(e, index)}
                 placeholder="Ecrire un ingrédient"
               />
-            ))}
+              <Button
+                className="btn-danger mx-2"
+                onClick={() => removeIngredient(index)}
+                type="button"
+              >
+                <RxCross1 />
+              </Button>
+            </div>
+          ))}
           <Button
             className="btn-primary w-100 mx-2"
             onClick={addIngredient}
@@ -213,19 +270,17 @@ try {
           ></Form.Control>
         </Form.Group>
    
-        <Form.Group className="my-2" controlId="imageUrl">
+        <Form.Group controlId="imageUrl">
           <Form.Label>Image de la recette :</Form.Label>
           <Form.Control
-            className="form-control input-lg"
-            type="text"
+            type="file"
             name="imageUrl"
-            value={recipe.imageUrl}
-            onChange={handleChange}
-            placeholder="Importer le lien url de votre image"
-          ></Form.Control>
-          {recipe.imageUrl && (
+            accept="image/*"
+            onChange={(e) => handleUpdateImage(e.target.files[0])}
+          />
+          {file && (
             <img
-              src={recipe.imageUrl}
+              src={file}
               alt="Aperçu de l'image"
               style={{
                 width: "250px",
