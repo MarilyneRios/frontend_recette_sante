@@ -1,5 +1,5 @@
 import { useState, useEffect  } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Container, Row } from "react-bootstrap";
 import { useCategory } from "../contexts/CategoryContext";
 import { useAllRecipesAuthQuery, useSearchRecipeQuery} from "../slices/recipesApiSlice";
@@ -12,8 +12,8 @@ import { useSearchContext } from "../contexts/SearchContext";
 function ReadRecipeS({ recipes, currentPage }) {
   const { userInfo } = useSelector((state) => state.auth);
   console.log(userInfo);
-
-  const { isError, isLoading, isSuccess } = useAllRecipesAuthQuery();
+  
+  const { isError, isLoading, isSuccess, refetch } = useAllRecipesAuthQuery();
   console.log(recipes);
   //Filtre par category
   const { selectedCategory } = useCategory();
@@ -22,24 +22,35 @@ function ReadRecipeS({ recipes, currentPage }) {
   
   const [filteredRecipes, setFilteredRecipes] = useState([]);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (isSuccess && recipes) {
-        let filtered = recipes;
-        if (selectedCategory) {
-            filtered = filtered.filter(recipe => recipe.category === selectedCategory);
-        }
-        if (submittedSearchQuery) {
-          const searchRegex = new RegExp(submittedSearchQuery, 'i');
-          filtered = filtered.filter(recipe => 
+    console.log('useEffect ran');
+    console.log('recipes:', recipes);
+    console.log('selectedCategory:', selectedCategory);
+    console.log('submittedSearchQuery:', submittedSearchQuery);
+    console.log('isSuccess:', isSuccess);
+
+    if (isSuccess) {
+      let filtered = recipes;
+      if (selectedCategory) {
+        filtered = filtered.filter((recipe) => recipe.category === selectedCategory);
+      }
+      if (submittedSearchQuery) {
+        const searchRegex = new RegExp(submittedSearchQuery, "i");
+        filtered = filtered.filter(
+          (recipe) =>
             searchRegex.test(recipe.name) ||
             searchRegex.test(recipe.pseudo) ||
             searchRegex.test(recipe.comments) ||
             searchRegex.test(recipe.category)
-          );
+        );
       }
+      refetch();
       setFilteredRecipes(filtered);
-  }
-}, [selectedCategory, submittedSearchQuery, isSuccess, recipes]);
+    }
+  }, [selectedCategory, submittedSearchQuery, isSuccess, recipes, dispatch, refetch]);
+  
 
   const recipesPerPage = 6;
   const indexOfLastRecipe = currentPage * recipesPerPage;

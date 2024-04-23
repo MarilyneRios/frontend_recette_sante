@@ -33,7 +33,7 @@ const UpdateRecipeScreen = () => {
   });
  
   const navigate = useNavigate();
-
+  
   const [updateRecipe, { isLoading }] = useUpdateRecipeMutation(id);
 
   //affiche la recette
@@ -97,12 +97,11 @@ try {
   console.log(res);
   console.log("Recipe after update: ", recipe); 
   toast.success("Recette modifiée avec succès.");
-  navigate("/");
+  navigate(-2);
 } catch (error) {
   console.error("Error updating recipe: ", error);
   toast.error("Erreur lors de la modification de la recette.");
 }
-
   };
 
   return (
@@ -213,21 +212,7 @@ try {
             placeholder="Ecrire les vertues de la recette"
           ></Form.Control>
         </Form.Group>
-            {/*
-         <Form.Group className="my-2" controlId="pseudo">
-          <Form.Label>Le pseudo de l&apos;auteur :</Form.Label>
-          <Form.Control
-            className="form-control input-lg"
-            type="text"
-            name="pseudo"
-            value={recipe.pseudo}
-            onChange={handleChange}
-            placeholder="ex: Doudou"
-          ></Form.Control>
-        </Form.Group>
-             */}
-
-
+   
         <Form.Group className="my-2" controlId="imageUrl">
           <Form.Label>Image de la recette :</Form.Label>
           <Form.Control

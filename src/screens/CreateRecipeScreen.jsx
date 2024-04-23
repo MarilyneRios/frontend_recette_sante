@@ -5,14 +5,13 @@ import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { RxCross1 } from "react-icons/rx";
 import { useAddRecipeMutation } from '../slices/recipesApiSlice';
-import FileBase64 from "react-file-base64";
 import { toast } from 'react-toastify'
 import Loader from '../components/Loader';
+
 
 const CreateRecipeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
   console.log("createRecipe userInfo" + JSON.stringify(userInfo, null, 2))
-  const userId = window.localStorage.getItem("id");
   const [recipe, setRecipe] = useState({
     name: "",
     category: "",
@@ -36,8 +35,6 @@ const CreateRecipeScreen = () => {
       const { name, value } = e.target;
       setRecipe({ ...recipe, [name]: value });
   };
-
- 
 
   //upload image
   const convertToBase64 = (file) => {
@@ -78,16 +75,6 @@ const handleUpdateImage = async (file) => {
     console.error("Error converting image to base64:", error);
   }
 };
-
- /*
-  const handleUpdateImage = async (file) => {
-    try {
-      const base64Image = await convertToBase64(file);
-      setRecipe({ ...recipe, imageUrl: base64Image });
-    } catch (error) {
-      console.error("Error converting image to base64:", error);
-    }
-  };*/
 
    //ajout ingrédient
   const handleIngredientChange = (e, index) => {
@@ -196,6 +183,7 @@ const handleUpdateImage = async (file) => {
             onChange={handleChange}
             placeholder="Ecrire les diverses étapes de la recette"
         ></textarea>
+      
       </Form.Group>
 
       <Form.Group className='my-2' controlId='makingTime'>

@@ -264,3 +264,37 @@ export default HomeScreen;
             />
           )}
         </Form.Group>
+
+**25/ rafraicchir les datas avec  la fonction refetch fournie par RTK Query**
+
+refetch est une fonction asynchrone, elle retourne une promesse.
+ 
+Exemple :
+
+  const { isError, isLoading, isSuccess, **refetch** } = useAllRecipesAuthQuery();
+
+  useEffect(() => {
+    console.log('useEffect ran');
+    console.log('recipes:', recipes);
+    console.log('selectedCategory:', selectedCategory);
+    console.log('submittedSearchQuery:', submittedSearchQuery);
+    console.log('isSuccess:', isSuccess);
+    if (isSuccess) {
+      let filtered = recipes;
+      if (selectedCategory) {
+        filtered = filtered.filter((recipe) => recipe.category === selectedCategory);
+      }
+      if (submittedSearchQuery) {
+        const searchRegex = new RegExp(submittedSearchQuery, "i");
+        filtered = filtered.filter(
+          (recipe) =>
+            searchRegex.test(recipe.name) ||
+            searchRegex.test(recipe.pseudo) ||
+            searchRegex.test(recipe.comments) ||
+            searchRegex.test(recipe.category)
+        );
+      }
+      **refetch();**
+      setFilteredRecipes(filtered);
+    }
+  }, [selectedCategory, submittedSearchQuery, isSuccess, recipes, dispatch, **refetch**]);

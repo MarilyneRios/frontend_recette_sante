@@ -12,6 +12,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
         body: Recipe,
       }),
       invalidatesTags:["Recipes"],
+      providesTags: ["Recipes"],
     }),
     updateRecipe: builder.mutation({
       query: ({id, ...Recipes}) => ({
@@ -19,6 +20,8 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
         method: 'PUT',
         body: Recipes,
       }),
+      invalidatesTags:["Recipes"],
+      providesTags: ["Recipes"],
     }),
     deleteRecipe: builder.mutation({
       query: (id) => ({
@@ -26,6 +29,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
         method: 'DELETE',
       }),
       invalidatesTags:["Recipes"],
+      providesTags: ["Recipes"],
     }),
 
     allRecipesAuth: builder.query({
@@ -62,6 +66,8 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
         url: `${RECIPES_URL}/filterRecipe/${category}`,
         method: 'GET',
       }),
+      invalidatesTags:["Recipes"],
+      providesTags: ["Recipes"],
     }),    
     
     allRecipesFavorite: builder.query({
@@ -69,18 +75,24 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
         url: `${RECIPES_URL}/allRecipesFavorite`,
         method: 'GET',
       }),
+      invalidatesTags:["Recipes"],
+      providesTags: ["Recipes"],
     }),
     oneRecipesFavorite: builder.query({
       query: (id) => ({
         url: `${RECIPES_URL}/oneRecipesFavorite/${id}`,
         method: 'GET',
       }),
+      invalidatesTags:["Recipes"],
+      providesTags: ["Recipes"],
     }),
     addRecipeFavorite: builder.mutation({
       query: (id) => ({
         url: `${RECIPES_URL}/addRecipeFavorite/${id}`,
         method: 'POST',
       }),
+      invalidatesTags:["Recipes"],
+      providesTags: ["Recipes"],
     }),
     removeRecipeFavorite: builder.mutation({
       query: (id) => ({
@@ -88,6 +100,8 @@ export const recipesApiSlice = apiSlice.injectEndpoints ({
         method: 'DELETE',
         body: id,
       }),
+      invalidatesTags:["Recipes"],
+      providesTags: ["Recipes"],
     }),
   }),
 });

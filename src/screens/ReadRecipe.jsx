@@ -35,7 +35,7 @@ function ReadRecipe() {
   });
 
   //afficher la recette
-  const { data, isError, isLoading, isSuccess } = useViewRecipeAuthQuery(id);
+  const { data, isError, isLoading, isSuccess, refetch } = useViewRecipeAuthQuery(id);
   console.log(data);
 
   useEffect(() => {
@@ -52,8 +52,9 @@ function ReadRecipe() {
         pseudo: data.pseudo,
         imageUrl: data.imageUrl,
       });
+      refetch();
     }
-  }, [data]);
+  }, [data,refetch]);
 
   //like btn logique
   const toggleLike = () => {
@@ -154,7 +155,7 @@ function ReadRecipe() {
                 {recipe.comments}
               </Card.Text>
               <Card.Text className="text-center fs-5">
-                Auteur : {recipe.pseudo}
+                Auteur : {recipe.pseudo || "inconnu"}
               </Card.Text>
   
               {userInfo && userInfo.username === recipe.pseudo && (

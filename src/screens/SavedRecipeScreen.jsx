@@ -35,7 +35,7 @@ const SavedRecipeScreen = () => {
       }
       setFilteredRecipes(filtered);
     }
-  }, [selectedCategory, submittedSearchQuery, isSuccess]);
+  }, [selectedCategory, submittedSearchQuery, isSuccess,recipes]);
 
   return (
     <>
