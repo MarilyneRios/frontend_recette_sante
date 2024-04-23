@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-import {  useCategory } from '../contexts/CategoryContext';
+import { useCategory } from "../contexts/CategoryContext";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -25,12 +25,11 @@ const Header = () => {
     if (category === "Toutes") {
       setSelectedCategory(null);
     } else {
-    console.log('avant setSelectedCategory : ' + category)
-    setSelectedCategory(category); 
-    console.log('après setSelectedCategory : ' + category)
+      console.log("avant setSelectedCategory : " + category);
+      setSelectedCategory(category);
+      console.log("après setSelectedCategory : " + category);
     }
   };
-
 
   //Déconnexion
   const [logoutApiCall] = useLogoutMutation();
@@ -50,7 +49,7 @@ const Header = () => {
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Mon cahier de recettes</Navbar.Brand>
+            <Navbar.Brand className="fs-4">Mon cahier de recettes</Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -58,24 +57,27 @@ const Header = () => {
             <Nav className="ms-auto  d-flex align-items-center justify-content-center">
               {userInfo ? (
                 <>
-                <img  src={userInfo.avatar} id="avatar" width="30" className='mx-2'/>
+                  <LinkContainer to="/createRecipe">
+                    <Navbar.Brand className="mx-2 fs-5">
+                      <GoPlusCircle /> Ajouter une recette
+                    </Navbar.Brand>
+                  </LinkContainer>
+
+                  <LinkContainer to="/allRecipesFavorite">
+                    <Navbar.Brand className="mx-3 fs-5">
+                      <BsBookmarkPlus /> Mes favoris
+                    </Navbar.Brand>
+                  </LinkContainer>
+                  <img
+                    src={userInfo.avatar}
+                    id="avatar"
+                    width="30"
+                    className="mx-2"
+                  />
                   <NavDropdown title={userInfo.username} id="username">
-                
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>
                         <CgProfile /> Profile
-                      </NavDropdown.Item>
-                    </LinkContainer>
-
-                    <LinkContainer to="/createRecipe">
-                      <NavDropdown.Item>
-                        <GoPlusCircle /> Ajouter une recette
-                      </NavDropdown.Item>
-                    </LinkContainer>
-
-                    <LinkContainer to="/allRecipesFavorite">
-                      <NavDropdown.Item>
-                        <BsBookmarkPlus /> Mes favoris
                       </NavDropdown.Item>
                     </LinkContainer>
 
@@ -87,9 +89,9 @@ const Header = () => {
                   <NavDropdown
                     title="Par catégories"
                     id="category"
-                    className="mx-5"
+                    className="mx-2"
                   >
-                   <NavDropdown.Item
+                    <NavDropdown.Item
                       onClick={() => handleCategorySelect("Toutes")}
                     >
                       Toutes
@@ -120,7 +122,7 @@ const Header = () => {
                       Boissons
                     </NavDropdown.Item>
                   </NavDropdown>
-                  </>
+                </>
               ) : (
                 <>
                   <LinkContainer to="/login">

@@ -298,3 +298,13 @@ Exemple :
       setFilteredRecipes(filtered);
     }
   }, [selectedCategory, submittedSearchQuery, isSuccess, recipes, dispatch, **refetch**]);
+
+**26/ types cuisines**
+Régime alimentaire:
+tous
+végétarien
+végan
+sans gluten
+équilibré
+
+**27/ drapeau et/ou noms pays**

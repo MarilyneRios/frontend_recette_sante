@@ -20,15 +20,16 @@ const UpdateRecipeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
   const [recipe, setRecipe] = useState({
-    id: id,
     name: "",
+    country:"",
     category: "",
-    ingredients: [""],
+    regime:"",
+    ingredients: [],
     instructions: "",
     makingTime: "",
     cookingTime: "",
     comments: "",
-    pseudo: "",
+    pseudo: userInfo.username,
     imageUrl: "",
     userId: window.localStorage.getItem("id"),
   });
@@ -135,7 +136,9 @@ try {
   const res = await updateRecipe({
     id: recipe._id,
     name: recipe.name,
+    country:recipe.country,
     category: recipe.category,
+    regime: recipe.regime,
     ingredients: recipe.ingredients,
     instructions: recipe.instructions,
     makingTime: recipe.makingTime,
@@ -148,7 +151,7 @@ try {
   console.log(res);
   console.log("Recipe after update: ", recipe); 
   toast.success("Recette modifiée avec succès.");
-  navigate(-2);
+  navigate(-1);
 } catch (error) {
   console.error("Error updating recipe: ", error);
   toast.error("Erreur lors de la modification de la recette.");
@@ -171,6 +174,18 @@ try {
           ></Form.Control>
         </Form.Group>
 
+              {/*pays */}
+      <Form.Group className='my-2' controlId='country'>
+        <Form.Label>Pays :</Form.Label>
+        <Form.Control
+       className="form-control input-lg"
+            type="text"
+            name="country"
+            onChange={handleChange}
+            placeholder="Ecrire la nationalité de la recette"
+        ></Form.Control>
+      </Form.Group>
+
         <Form.Group className="my-2" controlId="category">
           <Form.Label>Catégorie : </Form.Label>
           <Form.Control
@@ -187,6 +202,25 @@ try {
             <option value="Plat">Plat</option>
             <option value="Dessert">Dessert</option>
             <option value="Boisson">Boisson</option>
+          </Form.Control>
+        </Form.Group>
+
+              {/* select regime */}
+      <Form.Group className='my-2' controlId='regime'>
+        <Form.Label>Régime : </Form.Label>
+        <Form.Control as="select"
+            className="form-control input-lg"
+            aria-label="Default select example"
+            id="regime"
+            name="regime"
+            value={recipe.regime}
+            onChange={handleChange}
+          >
+            <option value="">Selectionner une régime</option>
+            <option value="équilibre">équilibré</option>
+            <option value="végétarien">végétarien</option>
+            <option value="végan">végan</option>
+            <option value="sans gluten">sans gluten</option>
           </Form.Control>
         </Form.Group>
 

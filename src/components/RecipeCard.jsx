@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Card, Button, Col } from "react-bootstrap";
 import bookImage from "../assets/book.png";
@@ -8,15 +8,14 @@ import {
   useAddRecipeFavoriteMutation,
   useRemoveRecipeFavoriteMutation,
   useAllRecipesFavoriteQuery,
-
 } from "../slices/recipesApiSlice";
 
 // eslint-disable-next-line react/prop-types
 function RecipeCard({ recipe }) {
-
   const { userInfo } = useSelector((state) => state.auth);
   const [liked, setLiked] = useState(false);
-  const {data: favoriteRecipes, refetch: refetchFavoriteRecipes} = useAllRecipesFavoriteQuery();
+  const { data: favoriteRecipes, refetch: refetchFavoriteRecipes } =
+    useAllRecipesFavoriteQuery();
   const [addRecipeFavorite] = useAddRecipeFavoriteMutation();
   const [removeRecipeFavorite] = useRemoveRecipeFavoriteMutation();
 
@@ -24,7 +23,10 @@ function RecipeCard({ recipe }) {
 
   //Favoris
   useEffect(() => {
-    if (favoriteRecipes && favoriteRecipes.some(favRecipe => favRecipe._id === recipe._id)) {
+    if (
+      favoriteRecipes &&
+      favoriteRecipes.some((favRecipe) => favRecipe._id === recipe._id)
+    ) {
       console.log("Recipe is in favoriteRecipes");
       setLiked(true);
     } else {
@@ -32,7 +34,6 @@ function RecipeCard({ recipe }) {
       setLiked(false);
     }
   }, [favoriteRecipes, recipe._id]);
-  
 
   const handleReadRecipe = (e) => {
     e.preventDefault();
@@ -50,22 +51,19 @@ function RecipeCard({ recipe }) {
   };
 
   const handleAddRecipeFavorite = () => {
-    
-    if(favoriteRecipes && favoriteRecipes._id === recipe._id){
-      console.log("Recipe is already in Favorite")
-    }
-    else{
+    if (favoriteRecipes && favoriteRecipes._id === recipe._id) {
+      console.log("Recipe is already in Favorite");
+    } else {
       setLiked(!liked);
       addRecipeFavorite(recipe._id)
-      .then((response) => {
-        console.log("RecipeFavorite add:", response);
-        refetchFavoriteRecipes(); 
-      })
-      .catch((error) => {
-        console.error("Error add RecipeFavorite:", error);
-      });
+        .then((response) => {
+          console.log("RecipeFavorite add:", response);
+          refetchFavoriteRecipes();
+        })
+        .catch((error) => {
+          console.error("Error add RecipeFavorite:", error);
+        });
     }
-
   };
 
   const handleremoveRecipeFavorite = () => {
@@ -74,7 +72,7 @@ function RecipeCard({ recipe }) {
     removeRecipeFavorite(recipe._id)
       .then((response) => {
         console.log("RecipeFavorite remove:", response);
-        refetchFavoriteRecipes(); 
+        refetchFavoriteRecipes();
       })
       .catch((error) => {
         console.error("Error remove RecipeFavorite:", error);
@@ -86,10 +84,10 @@ function RecipeCard({ recipe }) {
       <Card
         // eslint-disable-next-line react/prop-types
         key={recipe.id}
-        className="text-center"
+        className="text-center "
         style={{
           width: "18rem",
-          height: "30rem",
+          height: "28rem",
           margin: "20px auto",
         }}
       >
@@ -103,24 +101,39 @@ function RecipeCard({ recipe }) {
             <FaHeart size={30} color="red" />
           ) : (
             <FaRegHeart size={30} color="black" />
-
           )}
         </Button>
         <Card.Img
           variant="top"
           // eslint-disable-next-line react/prop-types
           src={recipe.imageUrl || bookImage}
-          className="p-3 m-auto "
-          style={{ width: "10rem" }}
+          className="p-3 mx-auto "
+          style={{ width: "10rem", position: "relative", top: 20}}
         />
         <Card.Body>
-          <Card.Title className="text-center fs-4">{recipe.name}</Card.Title>
-          <Card.Text className="text-center fs-5">{recipe.category}</Card.Text>
+          <Card.Title
+            className="text-center fs-4 mx-5 my-3 "
+            
+          >
+            {recipe.name}
+          </Card.Title>
 
-          <Card.Text className="text-center">
-            Les bienfaits : {recipe.comments}
+          <Card.Text
+            className="text-center fs-5 mx-5 my-3"
+          >
+            {recipe.category}
           </Card.Text>
-          <Card.Text className="text-center ">
+
+          <Card.Text
+            className="text-center fs-5 mx-5 my-3"
+          >
+            {recipe.regime}
+          </Card.Text>
+
+
+          <Card.Text
+            className="text-center mx-5 my-3"
+          >
             <em>Auteur : {recipe.pseudo || "inconnu"}</em>
           </Card.Text>
 
@@ -128,6 +141,7 @@ function RecipeCard({ recipe }) {
             <Button
               onClick={handleReadRecipe}
               className=" btn btn-lg btn-dark rounded mx-5 my-3"
+              style={{ position: "absolute", bottom: 10 }}
             >
               Lire
             </Button>

@@ -24,7 +24,9 @@ function ReadRecipe() {
   const [recipe, setRecipe] = useState({
     id: id,
     name: "",
+    country:"",
     category: "",
+    regime:"",
     ingredients: [],
     instructions: "",
     makingTime: 0,
@@ -43,7 +45,9 @@ function ReadRecipe() {
       setRecipe({
         ...recipe,
         name: data.name,
+        country: data.country,
         category: data.category,
+        regime: data.regime,
         ingredients: data.ingredients,
         instructions: data.instructions,
         makingTime: data.makingTime,
@@ -123,7 +127,13 @@ function ReadRecipe() {
   
               <Card.Title className="text-center fs-3"><strong>{recipe.name}</strong></Card.Title>
               <Card.Text className="text-center fs-5">
+              {recipe.country}
+              </Card.Text>
+              <Card.Text className="text-center fs-5">
               {recipe.category}
+              </Card.Text>
+              <Card.Text className="text-center fs-5">
+              {recipe.regime}
               </Card.Text>
               <Card.Text className="text-center fs-5">
               <em>Ingrédients : </em> 
@@ -159,16 +169,16 @@ function ReadRecipe() {
               </Card.Text>
   
               {userInfo && userInfo.username === recipe.pseudo && (
-                <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex flex-column justify-content-center align-items-center">
                   <Button
                     onClick={handleUpdate}
-                    className="btn btn-primary mx-2 mt-2 "
+                    className="btn btn-primary w-75 mx-2 mt-2 "
                   >
                     Modifier
                   </Button>
                   <Button
                     onClick={handleDeleteRecipe}
-                    className="btn btn-danger rounded mx-2 mt-2"
+                    className="btn btn-danger rounded w-75 mx-2 mt-2"
                   >
                     Effacer
                   </Button>

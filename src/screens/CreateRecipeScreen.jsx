@@ -14,7 +14,9 @@ const CreateRecipeScreen = () => {
   console.log("createRecipe userInfo" + JSON.stringify(userInfo, null, 2))
   const [recipe, setRecipe] = useState({
     name: "",
+    country:"",
     category: "",
+    regime:"",
     ingredients: [],
     instructions: "",
     makingTime: "",
@@ -101,7 +103,7 @@ const handleUpdateImage = async (file) => {
       const result = await createRecipe(recipe).unwrap();
       //console.log("Recipe created successfully:", result);
       toast.success("Recette créée avec succès." );
-      navigate('/');
+      navigate(-1);
     } catch (error) {
      // console.error("Error creating recipe:", error);
       toast.error("Erreur lors de la création de la recette." );
@@ -124,6 +126,18 @@ const handleUpdateImage = async (file) => {
         ></Form.Control>
       </Form.Group>
 
+      {/*pays */}
+      <Form.Group className='my-2' controlId='name'>
+        <Form.Label>Pays :</Form.Label>
+        <Form.Control
+       className="form-control input-lg"
+            type="text"
+            name="name"
+            onChange={handleChange}
+            placeholder="Ecrire la nationalité de la recette"
+        ></Form.Control>
+      </Form.Group>
+
       <Form.Group className='my-2' controlId='category'>
         <Form.Label>Catégorie : </Form.Label>
         <Form.Control as="select"
@@ -139,6 +153,25 @@ const handleUpdateImage = async (file) => {
             <option value="Plat">Plat</option>
             <option value="Dessert">Dessert</option>
             <option value="Boisson">Boisson</option>
+          </Form.Control>
+        </Form.Group>
+
+      {/* select regime */}
+      <Form.Group className='my-2' controlId='category'>
+        <Form.Label>Régime : </Form.Label>
+        <Form.Control as="select"
+            className="form-control input-lg"
+            aria-label="Default select example"
+            id="regime"
+            name="regime"
+            value={recipe.regime}
+            onChange={handleChange}
+          >
+            <option value="">Selectionner une régime</option>
+            <option value="équilibre">équilibré</option>
+            <option value="végétarien">végétarien</option>
+            <option value="végan">végan</option>
+            <option value="sans gluten">sans gluten</option>
           </Form.Control>
         </Form.Group>
 
