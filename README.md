@@ -308,3 +308,191 @@ sans gluten
 équilibré
 
 **27/ drapeau et/ou noms pays**
+
+
+
+    import { useState } from "react";
+import { Form } from "react-bootstrap";
+
+const Flag = () => {
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [flagUrl, setFlagUrl] = useState("");
+
+  //code sur https://flagsapi.com
+  const countryCodes = {
+    // Europe
+    France: "fr",
+    Allemagne: "de",
+    Italie: "it",
+    Espagne: "es",
+    "Royaume-Uni": "gb",
+       Irlande: "ie",
+    Portugal: "pt",
+    Belgique: "be",
+    PaysBas: "nl",
+    Danemark: "dk",
+    Suède: "se",
+    Norvège: "no",
+    Finlande: "fi",
+    Pologne: "pl",
+    Autriche: "at",
+    Suisse: "ch",
+    Grèce: "gr",
+    Roumanie: "ro",
+    "République Tchèque": "cz",
+    Hongrie: "hu",
+    Biélorussie: "by",
+    Bulgarie: "bg",
+    Slovaquie: "sk",
+    Moldavie: "md",
+    // Asie
+    Russie: "ru",
+    Chine: "cn",
+    Inde: "in",
+    Japon: "jp",
+    CoréeDuSud: "kr",
+    Indonésie: "id",
+    Turquie: "tr",
+    Iran: "ir",
+    Thaïlande: "th",
+    // Amérique du Nord
+    ÉtatsUnis: "us",
+    Canada: "ca",
+    Mexique: "mx",
+    // Amérique du Sud
+    Brésil: "br",
+    Argentine: "ar",
+    Colombie: "co",
+    Chili: "cl",
+    Pérou: "pe",
+    Cuba: "cu",
+    colombie: "co",
+    // Afrique
+    AfriqueDuSud: "za",
+    Égypte: "eg",
+    Nigeria: "ng",
+    Algérie: "dz",
+    Maroc: "ma",
+    "Burkina Faso": "bf",
+    Cameroon: "cm",
+    Ghana: "gh",
+    Mali: "ml",
+    Tunésie:"tn",
+    Niger:"ne",
+ 
+  };
+
+  const handleCountryChange = (e) => {
+    const selectedCountry = e.target.value;
+    setSelectedCountry(selectedCountry);
+
+    const countryCode = countryCodes[selectedCountry];
+    if (countryCode) {
+      const flagUrl = `https://flagcdn.com/w640/${countryCode}.png`;
+      setFlagUrl(flagUrl);
+    }
+  };
+
+  return (
+    <div>
+    
+      {flagUrl && (
+        <img
+          src={flagUrl}
+          alt={`Drapeau de ${selectedCountry}`}
+          style={{ marginTop: "1rem", width: "3rem" }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Flag;
+///////////////////////////////////////////////////////////////////////////////
+ou
+//////////////////////////////////////////////////////////////////////////////
+
+const Flag = ({ country }) => {
+  const [flagUrl, setFlagUrl] = useState("");
+
+  useEffect(() => {
+    const countryCodes = {
+    // Europe
+    France: "fr",
+    Allemagne: "de",
+    Italie: "it",
+    Espagne: "es",
+    "Royaume-Uni": "gb",
+    Irlande: "ie",
+    Portugal: "pt",
+    Belgique: "be",
+    PaysBas: "nl",
+    Danemark: "dk",
+    Suède: "se",
+    Norvège: "no",
+    Finlande: "fi",
+    Pologne: "pl",
+    Autriche: "at",
+    Suisse: "ch",
+    Grèce: "gr",
+    Roumanie: "ro",
+    "République Tchèque": "cz",
+    Hongrie: "hu",
+    Biélorussie: "by",
+    Bulgarie: "bg",
+    Slovaquie: "sk",
+    Moldavie: "md",
+    // Asie
+    Russie: "ru",
+    Chine: "cn",
+    Inde: "in",
+    Japon: "jp",
+    CoréeDuSud: "kr",
+    Indonésie: "id",
+    Turquie: "tr",
+    Thaïlande: "th",
+    // Amérique du Nord
+    ÉtatsUnis: "us",
+    Canada: "ca",
+    Mexique: "mx",
+    // Amérique du Sud
+    Brésil: "br",
+    Argentine: "ar",
+    Colombie: "co",
+    Chili: "cl",
+    Cuba: "cu",
+    // Afrique
+    AfriqueDuSud: "za",
+    Égypte: "eg",
+    Nigeria: "ng",
+    Algérie: "dz",
+    Maroc: "ma",
+    "Burkina Faso": "bf",
+    Cameroon: "cm",
+    Ghana: "gh",
+    Mali: "ml",
+    Tunésie:"tn",
+    Niger:"ne",
+    };
+
+    const countryCode = countryCodes[country];
+    if (countryCode) {
+      const flagUrl = `https://flagcdn.com/w640/${countryCode}.png`;
+      setFlagUrl(flagUrl);
+    }
+  }, [country]);
+
+  return (
+    <div>
+      {flagUrl && (
+        <Card.Img
+          src={flagUrl}
+          alt={`Drapeau de ${country}`}
+          style={{ marginTop: "1rem", width: "2.5rem" }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Flag;

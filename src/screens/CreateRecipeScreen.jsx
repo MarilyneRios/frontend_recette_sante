@@ -1,22 +1,22 @@
-import { useState} from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { RxCross1 } from "react-icons/rx";
-import { useAddRecipeMutation } from '../slices/recipesApiSlice';
-import { toast } from 'react-toastify'
-import Loader from '../components/Loader';
-
+import { useAddRecipeMutation } from "../slices/recipesApiSlice";
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
+import Flag from "../components/Flag";
 
 const CreateRecipeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  console.log("createRecipe userInfo" + JSON.stringify(userInfo, null, 2))
+  console.log("createRecipe userInfo" + JSON.stringify(userInfo, null, 2));
   const [recipe, setRecipe] = useState({
     name: "",
-    country:"",
+    country: "",
     category: "",
-    regime:"",
+    regime: "",
     ingredients: [],
     instructions: "",
     makingTime: "",
@@ -27,16 +27,20 @@ const CreateRecipeScreen = () => {
     userId: window.localStorage.getItem("id"),
   });
   const [file, setFile] = useState("");
+  //flags
+ 
 
   const navigate = useNavigate();
 
-  const[createRecipe, {isLoading}] = useAddRecipeMutation();
- 
+  const [createRecipe, { isLoading }] = useAddRecipeMutation();
+
   const handleChange = (e) => {
-      const { name, value } = e.target;
-      setRecipe({ ...recipe, [name]: value });
+    const { name, value } = e.target;
+    setRecipe({ ...recipe, [name]: value });
   };
 
+
+  
   //upload image
   const convertToBase64 = (file) => {
     console.log("convertToBase64", file);
@@ -49,35 +53,35 @@ const CreateRecipeScreen = () => {
     return data;
   };
 
- //Réduire la taille de l'image
- const resizeImage = (file) => {
-  return new Promise((resolve, reject) => {
-    const img = document.createElement('img');
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      // Set the canvas dimensions to the desired size
-      canvas.width = 250;
-      canvas.height = 250;
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob(resolve, file.type);
-    };
-    img.onerror = reject;
-    img.src = URL.createObjectURL(file);
-  });
-};
+  //Réduire la taille de l'image
+  const resizeImage = (file) => {
+    return new Promise((resolve, reject) => {
+      const img = document.createElement("img");
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        // Set the canvas dimensions to the desired size
+        canvas.width = 250;
+        canvas.height = 250;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(resolve, file.type);
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
+    });
+  };
 
-const handleUpdateImage = async (file) => {
-  try {
-    const resizedImage = await resizeImage(file);
-    const base64Image = await convertToBase64(resizedImage);
-    setRecipe({ ...recipe, imageUrl: base64Image });
-  } catch (error) {
-    console.error("Error converting image to base64:", error);
-  }
-};
+  const handleUpdateImage = async (file) => {
+    try {
+      const resizedImage = await resizeImage(file);
+      const base64Image = await convertToBase64(resizedImage);
+      setRecipe({ ...recipe, imageUrl: base64Image });
+    } catch (error) {
+      console.error("Error converting image to base64:", error);
+    }
+  };
 
-   //ajout ingrédient
+  //ajout ingrédient
   const handleIngredientChange = (e, index) => {
     const newIngredients = [...recipe.ingredients];
     newIngredients[index] = e.target.value;
@@ -98,49 +102,49 @@ const handleUpdateImage = async (file) => {
   // Fonction pour gérer la soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log("Submitting recipe:", recipe); 
+    console.log("Submitting recipe:", recipe);
     try {
       const result = await createRecipe(recipe).unwrap();
       //console.log("Recipe created successfully:", result);
-      toast.success("Recette créée avec succès." );
+      toast.success("Recette créée avec succès.");
       navigate(-1);
     } catch (error) {
-     // console.error("Error creating recipe:", error);
-      toast.error("Erreur lors de la création de la recette." );
+      // console.error("Error creating recipe:", error);
+      toast.error("Erreur lors de la création de la recette.");
     }
   };
-  
-  return (
-    <FormContainer >
-    <h1 className="text-center">Créer une recette</h1>
-    <Form onSubmit={handleSubmit}>
 
-      <Form.Group className='my-2' controlId='name'>
-        <Form.Label>Nom de la recette :</Form.Label>
-        <Form.Control
-       className="form-control input-lg"
+  return (
+    <FormContainer>
+      <h1 className="text-center">Créer une recette</h1>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="my-2" controlId="name">
+          <Form.Label>Nom de la recette :</Form.Label>
+          <Form.Control
+            className="form-control input-lg"
             type="text"
             name="name"
             onChange={handleChange}
             placeholder="Ecrire le nom de la recette"
-        ></Form.Control>
-      </Form.Group>
+          ></Form.Control>
+        </Form.Group>
 
-      {/*pays */}
-      <Form.Group className='my-2' controlId='name'>
+        {/*pays */}
+        <Form.Group className='my-2' controlId='country'>
         <Form.Label>Pays :</Form.Label>
         <Form.Control
-       className="form-control input-lg"
+            className="form-control input-lg"
             type="text"
-            name="name"
+            name="country"
             onChange={handleChange}
             placeholder="Ecrire la nationalité de la recette"
         ></Form.Control>
       </Form.Group>
 
-      <Form.Group className='my-2' controlId='category'>
-        <Form.Label>Catégorie : </Form.Label>
-        <Form.Control as="select"
+        <Form.Group className="my-2" controlId="category">
+          <Form.Label>Catégorie : </Form.Label>
+          <Form.Control
+            as="select"
             className="form-control input-lg"
             aria-label="Default select example"
             name="category"
@@ -156,13 +160,13 @@ const handleUpdateImage = async (file) => {
           </Form.Control>
         </Form.Group>
 
-      {/* select regime */}
-      <Form.Group className='my-2' controlId='category'>
-        <Form.Label>Régime : </Form.Label>
-        <Form.Control as="select"
+        {/* select regime */}
+        <Form.Group className="my-2" controlId="regime">
+          <Form.Label>Régime : </Form.Label>
+          <Form.Control
+            as="select"
             className="form-control input-lg"
             aria-label="Default select example"
-            id="regime"
             name="regime"
             value={recipe.regime}
             onChange={handleChange}
@@ -175,27 +179,29 @@ const handleUpdateImage = async (file) => {
           </Form.Control>
         </Form.Group>
 
-        <Form.Group className='my-2' controlId='ingredients'>
+        <Form.Group className="my-2" controlId="ingredients">
           <Form.Label>Les ingrédients :</Form.Label>
           {/* Affichage des champs d'ingrédients avec la possibilité de supprimer */}
-          {recipe && recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
-            <div key={index} className="d-flex mb-2">
-              <input
-                className="form-control input-lg"
-                type="text"
-                value={ingredient}
-                onChange={(e) => handleIngredientChange(e, index)}
-                placeholder="Ecrire un ingrédient"
-              />
-              <Button
-                className="btn-danger mx-2"
-                onClick={() => removeIngredient(index)}
-                type="button"
-              >
-                <RxCross1 />
-              </Button>
-            </div>
-          ))}
+          {recipe &&
+            recipe.ingredients &&
+            recipe.ingredients.map((ingredient, index) => (
+              <div key={index} className="d-flex mb-2">
+                <input
+                  className="form-control input-lg"
+                  type="text"
+                  value={ingredient}
+                  onChange={(e) => handleIngredientChange(e, index)}
+                  placeholder="Ecrire un ingrédient"
+                />
+                <Button
+                  className="btn-danger mx-2"
+                  onClick={() => removeIngredient(index)}
+                  type="button"
+                >
+                  <RxCross1 />
+                </Button>
+              </div>
+            ))}
           {/* Bouton pour ajouter un ingrédient */}
           <Button
             className="btn-primary w-100 mx-2"
@@ -205,57 +211,54 @@ const handleUpdateImage = async (file) => {
             Ajouter un ingrédient
           </Button>
         </Form.Group>
-     
-        <Form.Group className='my-2' controlId='instructions'>
-        <Form.Label>La préparation :</Form.Label>
-        <textarea
-       className="form-control input-lg"
+
+        <Form.Group className="my-2" controlId="instructions">
+          <Form.Label>La préparation :</Form.Label>
+          <textarea
+            className="form-control input-lg"
             type="text"
             name="instructions"
             onChange={handleChange}
             placeholder="Ecrire les diverses étapes de la recette"
-        ></textarea>
-      
-      </Form.Group>
+          ></textarea>
+        </Form.Group>
 
-      <Form.Group className='my-2' controlId='makingTime'>
-        <Form.Label>Le temps de préparation (min) :</Form.Label>
-        <Form.Control
-       className="form-control input-lg"
+        <Form.Group className="my-2" controlId="makingTime">
+          <Form.Label>Le temps de préparation (min) :</Form.Label>
+          <Form.Control
+            className="form-control input-lg"
             type="number"
             name="makingTime"
             onChange={handleChange}
             placeholder="0"
             min="0"
-        ></Form.Control>
-      </Form.Group>
+          ></Form.Control>
+        </Form.Group>
 
-      <Form.Group className='my-2' controlId='cookingTime'>
-        <Form.Label>Le temps de cuisson (min) :</Form.Label>
-        <Form.Control
-       className="form-control input-lg"
+        <Form.Group className="my-2" controlId="cookingTime">
+          <Form.Label>Le temps de cuisson (min) :</Form.Label>
+          <Form.Control
+            className="form-control input-lg"
             type="number"
             name="cookingTime"
             onChange={handleChange}
             placeholder="0"
             min="0"
-        ></Form.Control>
-      </Form.Group>
+          ></Form.Control>
+        </Form.Group>
 
-      <Form.Group className='my-2' controlId='comments'>
-        <Form.Label>Les bienfaits de la recette :</Form.Label>
-        <Form.Control
-       className="form-control input-lg"
+        <Form.Group className="my-2" controlId="comments">
+          <Form.Label>Les bienfaits de la recette :</Form.Label>
+          <Form.Control
+            className="form-control input-lg"
             type="text"
             name="comments"
             onChange={handleChange}
             placeholder="Ecrire les vertues de la recette"
-        ></Form.Control>
+          ></Form.Control>
+        </Form.Group>
 
-      </Form.Group>
-
-
-      <Form.Group controlId="imageUrl">
+        <Form.Group controlId="imageUrl">
           <Form.Label>Image de la recette :</Form.Label>
           <Form.Control
             type="file"
@@ -276,24 +279,24 @@ const handleUpdateImage = async (file) => {
             />
           )}
           <Form.Label>ou par lien url :</Form.Label>
-        <Form.Control  className="form-control input-lg"
+          <Form.Control
+            className="form-control input-lg"
             type="text"
             name="imageUrl"
             value={recipe.imageUrl}
             onChange={handleChange}
-            placeholder="Importer le lien url de votre image">
-          </Form.Control>
+            placeholder="Importer le lien url de votre image"
+          ></Form.Control>
         </Form.Group>
 
-      <Button type='submit' variant='primary' className='mt-3 w-100'>
+        <Button type="submit" variant="primary" className="mt-3 w-100">
           Enregistrer la recette
-      </Button>
-      
-      {isLoading && <Loader />} 
+        </Button>
+
+        {isLoading && <Loader />}
       </Form>
-
     </FormContainer>
-  )
-}
+  );
+};
 
-export default CreateRecipeScreen
+export default CreateRecipeScreen;

@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FormContainerRecipe from "../components/FormContainerRecipe";
-import { Card, Button, Row, Col, ListGroup } from "react-bootstrap";
+import { Card, Button,  ListGroup } from "react-bootstrap";
 import bookImage from "../assets/book.png";
 import { useViewRecipeAuthQuery } from "../slices/recipesApiSlice";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Loader from "../components/Loader";
-import { Link } from "react-router-dom";
+
 import { useParams } from "react-router-dom";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import { TbTrashX } from "react-icons/tb";
-
+import Flag from "../components/Flag";
 import { useDeleteRecipeMutation } from "../slices/recipesApiSlice";
 import BackButton from "../components/BackButton";
 
@@ -37,7 +37,7 @@ function ReadRecipe() {
     imageUrl: "",
   });
 
-  //afficher la recette
+   //afficher la recette
   const { data, isError, isLoading, isSuccess, refetch } = useViewRecipeAuthQuery(id);
   console.log(data);
 
@@ -125,11 +125,11 @@ function ReadRecipe() {
                   <FaRegHeart size={30} color="black" />
                 )}
               </Button>
-  
-              <Card.Title className="text-center fs-3"><strong>{recipe.name}</strong></Card.Title>
-              <Card.Text className="text-center fs-5">
-              {recipe.country}
-              </Card.Text>
+                <div className="d-flex  justify-content-center align-items-center my-3">
+                {recipe.country && <Flag country={recipe.country} />}
+                 <Card.Title className="text-center fs-3 mx-3 mt-3"><strong> {recipe.name}</strong></Card.Title>
+                </div>
+
               <Card.Text className="text-center fs-5">
               {recipe.category}
               </Card.Text>
