@@ -1,45 +1,56 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import { useLoginMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
-import { toast } from 'react-toastify';
-import Loader from '../components/Loader';
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const[login, {isLoading}] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
-  const {userInfo} = useSelector((state)=> state.auth); 
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/');
+      navigate("/");
     }
   }, [navigate, userInfo]);
+
+  const translateError = (error) => {
+    if (error.includes("Invalid email or password")) {
+      return "Email ou mot de passe incorrect";
+    } else {
+      return "Erreur inconnue";
+    }
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("submit");
     try {
-      const res = await login({ email, password }).unwrap(); 
+      const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
-      navigate('/');
+      navigate("/");
     } catch (err) {
-      //console.log(err?.data?.message || err.error);
-      toast.error(err?.data?.message || err.error);
+      const translatedError = translateError(err?.data?.message || err.error);
+      toast.error(translatedError);
     }
-  }
+  };
 
   return (
-     <FormContainer >
+    <FormContainer>
       <h1 className="text-center">Connexion</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="my-2" controlId="email">
@@ -50,7 +61,13 @@ const LoginScreen = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
+          {emailError && (
+            <div className="alert alert-danger">
+              {translateError(emailError)}
+            </div>
+          )}
         </Form.Group>
+        
         <Form.Group className="my-2" controlId="password">
           <Form.Label>Mot de passe</Form.Label>
           <Form.Control
@@ -59,20 +76,19 @@ const LoginScreen = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
+          {passwordError && (
+            <div className="alert alert-danger">
+              {translateError(passwordError)}
+            </div>
+          )}
         </Form.Group>
-        
-        {isLoading && <Loader/>}
 
-        <Button
-         
-          type="submit"
-          variant="primary"
-          className="mt-3 w-100"
-        >
+        {isLoading && <Loader />}
+
+        <Button type="submit" variant="primary" className="mt-3 w-100">
           Se connecter
         </Button>
       </Form>
-
 
       <Row className="py-3">
         <Col>
@@ -80,7 +96,7 @@ const LoginScreen = () => {
         </Col>
       </Row>
     </FormContainer>
-  )
-}
+  );
+};
 
-export default LoginScreen
+export default LoginScreen;

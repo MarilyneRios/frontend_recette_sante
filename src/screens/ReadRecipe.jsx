@@ -10,7 +10,8 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
-import { IoReturnUpBack } from "react-icons/io5";
+import { TbTrashX } from "react-icons/tb";
+
 import { useDeleteRecipeMutation } from "../slices/recipesApiSlice";
 import BackButton from "../components/BackButton";
 
@@ -101,8 +102,8 @@ function ReadRecipe() {
           <Card.Img
               variant="right"
               src={recipe.imageUrl || bookImage}
-              style={{ maxWidth: "20rem", boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)",marginLeft:"3rem", marginTop: "3.5rem"  }}
-              className="rounded  order-0 order-md-1 mx-5"
+              style={{ maxWidth: "20rem", boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)",marginLeft:"5rem", marginTop: "3.5rem",}}
+              className="rounded  order-0 order-md-1 "
             />
         
             <Card.Body className="flex-grow-1 text-right order-0 order-md-1">
@@ -169,18 +170,18 @@ function ReadRecipe() {
               </Card.Text>
   
               {userInfo && userInfo.username === recipe.pseudo && (
-                <div className="d-flex flex-column justify-content-center align-items-center">
+                <div className="d-flex  justify-content-center align-items-center">
                   <Button
                     onClick={handleUpdate}
-                    className="btn btn-primary w-75 mx-2 mt-2 "
+                    className="btn btn-primary w-75 mx-2 my-2 fs-5"
                   >
                     Modifier
                   </Button>
                   <Button
                     onClick={handleDeleteRecipe}
-                    className="btn btn-danger rounded w-75 mx-2 mt-2"
+                    className="btn btn-danger rounded w-10 mx-2 my-2"
                   >
-                    Effacer
+                    <TbTrashX size={25}/>
                   </Button>
                 </div>
               )}

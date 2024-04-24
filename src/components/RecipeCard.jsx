@@ -108,31 +108,30 @@ function RecipeCard({ recipe }) {
           // eslint-disable-next-line react/prop-types
           src={recipe.imageUrl || bookImage}
           className="p-3 mx-auto "
-          style={{ width: "10rem", position: "relative", top: 20}}
+          style={{ width: "10rem",height:"12rem", position: "relative", top: 20, borderRadius:"22px",}}
         />
         <Card.Body>
           <Card.Title
-            className="text-center fs-4 mx-5 my-3 "
-            
+            className="text-center fs-4 mx-auto my-2 w-100"
           >
             {recipe.name}
           </Card.Title>
 
           <Card.Text
-            className="text-center fs-5 mx-5 my-3"
+            className="text-center fs-5 mx-5 my-2"
           >
             {recipe.category}
           </Card.Text>
 
           <Card.Text
-            className="text-center fs-5 mx-5 my-3"
+            className="text-center fs-5 mx-5 my-2"
           >
             {recipe.regime}
           </Card.Text>
 
 
           <Card.Text
-            className="text-center mx-5 my-3"
+            className="text-center mx-5 my-2"
           >
             <em>Auteur : {recipe.pseudo || "inconnu"}</em>
           </Card.Text>

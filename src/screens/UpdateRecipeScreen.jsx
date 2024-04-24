@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { useParams } from "react-router-dom";
@@ -35,7 +35,10 @@ const UpdateRecipeScreen = () => {
   });
  
   const [file, setFile] = useState("");
-  
+
+  const [imageUrlInput, setImageUrlInput] = useState("");
+
+
   const navigate = useNavigate();
   
   const [updateRecipe, { isLoading }] = useUpdateRecipeMutation(id);
@@ -91,8 +94,8 @@ const handleUpdateImage = async (file) => {
   // Pour récupérer les datas de la recette
   useEffect(() => {
     if (data) {
-      console.log("Data useEffect : ", data); 
-      console.log("data.id useEffect : ", data._id); 
+      setImageUrlInput(data.imageUrl || "");
+
       setRecipe((prevRecipe) => ({
         ...prevRecipe,
         _id: data._id || "",
@@ -130,33 +133,44 @@ const handleUpdateImage = async (file) => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
-try {
-  console.log("Recipe ID: ", id);
-  const res = await updateRecipe({
-    id: recipe._id,
-    name: recipe.name,
-    country:recipe.country,
-    category: recipe.category,
-    regime: recipe.regime,
-    ingredients: recipe.ingredients,
-    instructions: recipe.instructions,
-    makingTime: recipe.makingTime,
-    cookingTime: recipe.cookingTime,
-    comments: recipe.comments,
-    pseudo: recipe.pseudo,
-    imageUrl: recipe.imageUrl,
-  }).unwrap();
   
-  console.log(res);
-  console.log("Recipe after update: ", recipe); 
-  toast.success("Recette modifiée avec succès.");
-  navigate(-1);
-} catch (error) {
-  console.error("Error updating recipe: ", error);
-  toast.error("Erreur lors de la modification de la recette.");
-}
+    try {
+      let imageUrlToUpdate = recipe.imageUrl;
+      if (imageUrlInput) {
+        // Si l'utilisateur a saisi une nouvelle URL, utilisez-la
+        imageUrlToUpdate = imageUrlInput;
+      } else if (file) {
+        // Sinon, si un fichier est sélectionné, mettez à jour l'image avec le fichier
+        const resizedImage = await resizeImage(file);
+        const base64Image = await convertToBase64(resizedImage);
+        imageUrlToUpdate = base64Image;
+      }
+  
+      const res = await updateRecipe({
+        id: recipe._id,
+        name: recipe.name,
+        country: recipe.country,
+        category: recipe.category,
+        regime: recipe.regime,
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
+        makingTime: recipe.makingTime,
+        cookingTime: recipe.cookingTime,
+        comments: recipe.comments,
+        pseudo: recipe.pseudo,
+        imageUrl: imageUrlToUpdate,
+      }).unwrap();
+  
+      console.log(res);
+      console.log("Recipe after update: ", recipe);
+      toast.success("Recette modifiée avec succès.");
+      navigate(-1);
+    } catch (error) {
+      console.error("Error updating recipe: ", error);
+      toast.error("Erreur lors de la modification de la recette.");
+    }
   };
+  
 
   return (
     <FormContainer>
@@ -293,7 +307,7 @@ try {
         </Form.Group>
 
         <Form.Group className="my-2" controlId="comments">
-          <Form.Label>Les bienfaits de la recette :</Form.Label>
+          <Form.Label>Commentaires :</Form.Label>
           <Form.Control
             className="form-control input-lg"
             type="text"
@@ -324,7 +338,16 @@ try {
               }}
             />
           )}
+          <Form.Label>ou par lien url :</Form.Label>
+          <Form.Control  className="form-control input-lg"
+            type="text"
+            name="imageUrl"
+            value={imageUrlInput}
+            onChange={(e) => setImageUrlInput(e.target.value)}
+            placeholder="Importer le lien url de votre image">
+          </Form.Control>
         </Form.Group>
+
 
         <Button type="submit" variant="primary" className="mt-3 w-100">
           Modifer la recette

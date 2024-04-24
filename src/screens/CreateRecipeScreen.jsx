@@ -251,6 +251,7 @@ const handleUpdateImage = async (file) => {
             onChange={handleChange}
             placeholder="Ecrire les vertues de la recette"
         ></Form.Control>
+
       </Form.Group>
 
 
@@ -274,6 +275,14 @@ const handleUpdateImage = async (file) => {
               }}
             />
           )}
+          <Form.Label>ou par lien url :</Form.Label>
+        <Form.Control  className="form-control input-lg"
+            type="text"
+            name="imageUrl"
+            value={recipe.imageUrl}
+            onChange={handleChange}
+            placeholder="Importer le lien url de votre image">
+          </Form.Control>
         </Form.Group>
 
       <Button type='submit' variant='primary' className='mt-3 w-100'>
