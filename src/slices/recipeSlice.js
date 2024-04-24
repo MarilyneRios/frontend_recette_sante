@@ -5,7 +5,9 @@ const initialState = {
   recipeInfo: {
     _id: "",
     name: "",
+    country:"",
     category: "",
+    regime: "",
     ingredients: [],
     instructions: "",
     makingTime: "",

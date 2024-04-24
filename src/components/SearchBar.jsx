@@ -4,8 +4,7 @@ import { useSearchContext } from "../contexts/SearchContext";
 
 const SearchBar = () => {
     const { searchQuery, setSearchQuery, setSubmittedSearchQuery  } = useSearchContext();   
-   
-    
+      
     const handleChange = (e) => {
         setSearchQuery(e.target.value);
         console.log("SearchBar handleChange"+ setSearchQuery)

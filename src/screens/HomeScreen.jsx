@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Hero from "../components/Hero";
 import { useAllRecipesAuthQuery } from "../slices/recipesApiSlice";
 import { useSelector } from "react-redux";
@@ -18,6 +18,10 @@ const HomeScreen = () => {
 
   const { searchQuery, setSearchQuery } = useSearchContext();
   console.log("HomeSecreen searchQuery et setSearchQuery : " + searchQuery + setSearchQuery );
+  // Réinitialiser currentPage à 1 chaque fois que searchQuery change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
 
   return (
     <div>
