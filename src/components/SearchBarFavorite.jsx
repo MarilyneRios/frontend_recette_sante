@@ -29,7 +29,7 @@ const SearchBarFavorite = () => {
                     <Col xs={10} sm={8} md={6} lg={4} className="mx-1 mb-2"> 
                         <Form.Control
                             type="text"
-                            placeholder="Rechercher une recette"
+                            placeholder="Rechercher par nom ou auteur"
                             className="mx-auto mt-3 mt-sm-0"
                             value={searchQuery}
                             onChange={handleChange}
