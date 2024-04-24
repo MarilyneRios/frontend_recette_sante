@@ -26,6 +26,7 @@ const Flag = ({ country }) => {
       grèce: "gr",
       roumanie: "ro",
       "république tchèque": "cz",
+      tchéquie: "cz",
       hongrie: "hu",
       biélorussie: "by",
       bulgarie: "bg",
