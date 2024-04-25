@@ -30,10 +30,15 @@ const RegisterScreen = () => {
   const translateError = (error) => {
     if (error.includes("Invalid email or password")) {
       return "Email ou mot de passe incorrect";
+    } else if (error.includes("Email already exists")) {
+      return "Cet email existe déjà";
+    } else if (error.includes("Username already exists")) {
+      return "Ce nom d'utilisateur existe déjà";
     } else {
       return "Erreur inconnue";
     }
   };
+  
 
   useEffect(() => {
     if (userInfo) {
@@ -57,11 +62,12 @@ const RegisterScreen = () => {
     }
     if (password !== confirmPassword) {
       setConfirmPasswordError("Les mots de passe ne correspondent pas");
+      return; //attention important si la création est possible
     } else {
       setConfirmPasswordError("");
     }
   
-    // Si l'email n'est pas conforme ou si les mots de passe ne correspondent pas, arrêtez la fonction ici
+    // Si pb email  ou si les mots de passe , rien ne se passe
     if (emailError || confirmPasswordError) {
       return;
     }
@@ -73,7 +79,16 @@ const RegisterScreen = () => {
       dispatch(setCredentials({ ...res }));
       navigate("/");
     } catch (err) {
-      toast.error(translateError(err?.data?.message || err.error));
+      if (err.code === 11000) { // Code d'erreur MongoDB pour les doublons
+        if (err.keyPattern && err.keyPattern.username) {
+          toast.error("Ce nom d'utilisateur existe déjà");
+        }
+        if (err.keyPattern && err.keyPattern.email) {
+          toast.error("Cet email existe déjà");
+        }
+      } else {
+        toast.error(translateError(err?.data?.message || err.error));
+      }
     }
   };
   

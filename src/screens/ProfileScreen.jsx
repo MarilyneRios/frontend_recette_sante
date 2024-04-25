@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
-import { useUpdateUserMutation } from "../slices/usersApiSlice";
+import { useUpdateUserMutation, useDeleteUserMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
+import { FaEye } from "react-icons/fa"; //<FaEye />
+import { FaEyeSlash } from "react-icons/fa6"; //<FaEyeSlash />
 
 const ProfileScreen = () => {
   const [email, setEmail] = useState("");
@@ -14,12 +16,17 @@ const ProfileScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword]= useState(false);
 
   const dispatch = useDispatch();
 
   const { userInfo } = useSelector((state) => state.auth);
 
   const [updateProfile, { isLoading }] = useUpdateUserMutation();
+
+  const [deleteUserProfile] = useDeleteUserMutation();
 
   useEffect(() => {
     setUsername(userInfo.username);
@@ -58,6 +65,27 @@ const ProfileScreen = () => {
     });
   };
 
+  //Supp user
+  const handleDelete = async () => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.")) {
+      try {
+        await deleteUserProfile(userInfo._id);
+        // Vous pouvez également déconnecter l'utilisateur ici
+        toast.success("Votre compte a été supprimé avec succès");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
+  };
+  
+  const translateError = (error) => {
+    if (error.includes("Invalid email or password")) {
+      return "Email ou mot de passe incorrect";
+    } else {
+      return "Erreur inconnue";
+    }
+  };
+  
   const handleUpdateImage = async (file) => {
     try {
       const resizedImage = await resizeImage(file);
@@ -95,22 +123,11 @@ const ProfileScreen = () => {
   };
   return (
     <FormContainer>
-      <h1>Mise à jour du profil</h1>
-
+      <h2 className="mb-3">Mise à jour du profil</h2>
       <Form onSubmit={handleSubmit}>
-        {/* A supprimer quand tout fonctionnera 
-      <Form.Group className='my-2' controlId='username'>
-          <Form.Label>Pseudo</Form.Label>
-          <Form.Control
-            type='username'
-            placeholder='Entrer votre pseudo'
-            value={username}
-            autoComplete='username'
-            onChange={(e) => setUsername(e.target.value)}
-          ></Form.Control>
-        </Form.Group>*/}
+     
         <Form.Group controlId="avatar">
-          <Form.Label>Image de la recette :</Form.Label>
+          <Form.Label className="fs-5">Avatar :</Form.Label>
           <Form.Control
             type="file"
             name="avatar"
@@ -132,7 +149,7 @@ const ProfileScreen = () => {
         </Form.Group>
 
         <Form.Group className="my-2" controlId="email">
-          <Form.Label>Addresse Email</Form.Label>
+          <Form.Label className="fs-5">Addresse Email :</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
@@ -142,31 +159,52 @@ const ProfileScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group className="my-2" controlId="password">
-          <Form.Label>Mot de passe</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Entrer votre mot de passe"
-            value={password}
-            autoComplete="new-password"
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+        <Form.Group className='my-2' controlId='password'>
+        <Form.Label className="fs-5">Mot de passe</Form.Label>
+        <div className="d-flex">
+        <Form.Control
+        type={showPassword ? "text" : "password"}
+          placeholder='Entrer votre mot de passe'
+          value={password}
+          autoComplete='new-password'
+          onChange={(e) => setPassword(e.target.value)}
+        ></Form.Control>
+              <Button variant="secondary" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+        </div>
+
+      </Form.Group>
 
         <Form.Group className="my-2" controlId="confirmPassword">
-          <Form.Label>Confirmer votre mot de passe</Form.Label>
+          <Form.Label className="fs-5">Confirmer votre mot de passe</Form.Label>
+          <div className="d-flex">
           <Form.Control
-            type="password"
-            placeholder="Confirm password"
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirmer votre mot de passe"
             value={confirmPassword}
             autoComplete="new-password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
+                <Button variant="secondary" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+          </div>
+  
+          {confirmPasswordError && (
+            <div className="alert alert-danger">{confirmPasswordError}</div>
+          )}
         </Form.Group>
 
-        <Button type="submit" variant="primary" className="mt-3">
+        <Button type="submit" variant="primary" className="mt-3 w-100">
           Mettre à jour
         </Button>
+
+      <div className="mt-3">
+        <Button variant="danger" onClick={handleDelete} >
+          Supprimer le compte
+        </Button>
+      </div>
 
         {isLoading && <Loader />}
       </Form>
