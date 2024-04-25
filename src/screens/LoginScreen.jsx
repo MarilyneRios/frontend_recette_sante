@@ -7,12 +7,16 @@ import { useLoginMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import { FaEye } from "react-icons/fa"; //<FaEye />
+import { FaEyeSlash } from "react-icons/fa6"; //<FaEyeSlash />
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -53,7 +57,7 @@ const LoginScreen = () => {
     <FormContainer>
       <h1 className="text-center">Connexion</h1>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="my-2" controlId="email">
+        <Form.Group className="my-2 " controlId="email">
           <Form.Label>Addresse email</Form.Label>
           <Form.Control
             type="email"
@@ -67,15 +71,20 @@ const LoginScreen = () => {
             </div>
           )}
         </Form.Group>
-        
+
         <Form.Group className="my-2" controlId="password">
           <Form.Label>Mot de passe</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Entrer votre mot de passe"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
+          <div className="d-flex">
+            <Form.Control
+              type={showPassword ? "text" : "password"}
+              placeholder="Entrer votre mot de passe"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></Form.Control>
+            <Button variant="secondary" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+          </div>
           {passwordError && (
             <div className="alert alert-danger">
               {translateError(passwordError)}

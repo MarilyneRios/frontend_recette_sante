@@ -7,6 +7,8 @@ import { useRegisterMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import { FaEye } from "react-icons/fa"; //<FaEye />
+import { FaEyeSlash } from "react-icons/fa6"; //<FaEyeSlash />
 
 const RegisterScreen = () => {
   const [username, setUsername] = useState("");
@@ -15,6 +17,8 @@ const RegisterScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword]= useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -103,24 +107,36 @@ const RegisterScreen = () => {
 
         <Form.Group className='my-2' controlId='password'>
         <Form.Label>Mot de passe</Form.Label>
+        <div className="d-flex">
         <Form.Control
-          type='password'
+        type={showPassword ? "text" : "password"}
           placeholder='Entrer votre mot de passe'
           value={password}
           autoComplete='new-password'
           onChange={(e) => setPassword(e.target.value)}
         ></Form.Control>
+              <Button variant="secondary" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+        </div>
+
       </Form.Group>
 
         <Form.Group className="my-2" controlId="confirmPassword">
           <Form.Label>Confirmer votre mot de passe</Form.Label>
+          <div className="d-flex">
           <Form.Control
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirmer votre mot de passe"
             value={confirmPassword}
             autoComplete="new-password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
+                <Button variant="secondary" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+          </div>
+  
           {confirmPasswordError && (
             <div className="alert alert-danger">{confirmPasswordError}</div>
           )}
