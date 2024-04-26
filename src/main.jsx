@@ -1,6 +1,5 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client';
-
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
@@ -33,9 +32,7 @@ const router = createBrowserRouter(
         <Route path='/profile' element={<ProfileScreen />} />
         <Route path='/oneRecipeAuth/:id' element={<UpdateRecipeScreen />} />
         <Route path='/createRecipe' element={<CreateRecipeScreen />} />
-
-        <Route path='/allRecipesFavorite' element={<SavedRecipeScreen />} />{/* favorite */}
-        
+        <Route path='/allRecipesFavorite' element={<SavedRecipeScreen />} />
         <Route path='/allRecipesAuth' element={<ReadRecipeS />} />
         <Route path='/viewRecipeAuth/:id' element={<ReadRecipe />} />
       </Route>
