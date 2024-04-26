@@ -18,7 +18,7 @@ import CreateRecipeScreen from './screens/CreateRecipeScreen.jsx';
 import UpdateRecipeScreen from './screens/UpdateRecipeScreen.jsx';
 import SavedRecipeScreen from './screens/SavedRecipeScreen.jsx';
 import ReadRecipe from './screens/ReadRecipe.jsx';
-import ReadRecipeS from './screens/ReadRecipeS.jsx';
+import ViewRecipes from './screens/ViewRecipes.jsx';
 
 // Création du routeur
 const router = createBrowserRouter(
@@ -33,7 +33,7 @@ const router = createBrowserRouter(
         <Route path='/oneRecipeAuth/:id' element={<UpdateRecipeScreen />} />
         <Route path='/createRecipe' element={<CreateRecipeScreen />} />
         <Route path='/allRecipesFavorite' element={<SavedRecipeScreen />} />
-        <Route path='/allRecipesAuth' element={<ReadRecipeS />} />
+        <Route path='/allRecipesAuth' element={<ViewRecipes />} />
         <Route path='/viewRecipeAuth/:id' element={<ReadRecipe />} />
       </Route>
     </Route>

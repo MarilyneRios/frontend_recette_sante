@@ -2,14 +2,14 @@ import { useState, useEffect  } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row } from "react-bootstrap";
 import { useCategory } from "../contexts/CategoryContext";
-import { useAllRecipesAuthQuery, useSearchRecipeQuery} from "../slices/recipesApiSlice";
+import { useAllRecipesAuthQuery} from "../slices/recipesApiSlice";
 import SearchBar from "../components/SearchBar";
 import Loader from "../components/Loader";
 import RecipeCard from "../components/RecipeCard";
 import { useSearchContext } from "../contexts/SearchContext";
 
 
-function ReadRecipeS({ recipes, currentPage }) {
+function ViewRecipes({ recipes, currentPage }) {
   const { userInfo } = useSelector((state) => state.auth);
   console.log(userInfo);
   
@@ -79,4 +79,4 @@ function ReadRecipeS({ recipes, currentPage }) {
   );
 }
 
-export default ReadRecipeS;
+export default ViewRecipes;

@@ -2,7 +2,7 @@ import { useState,useEffect } from "react";
 import Hero from "../components/Hero";
 import { useAllRecipesAuthQuery } from "../slices/recipesApiSlice";
 import { useSelector } from "react-redux";
-import ReadRecipeS from "./ReadRecipeS";
+import ViewRecipes from "./ViewRecipes";
 import PaginationComponent from "../components/PaginationComponent";
 import {  useCategory } from '../contexts/CategoryContext';
 import { useSearchContext } from "../contexts/SearchContext";
@@ -30,7 +30,7 @@ const HomeScreen = () => {
       ) : (
         <div className="d-flex flex-column align-items-center justify-content-center">
           <div className=" d-flex flex-wrap justify-content-around align-self-sm-stretch">
-            <ReadRecipeS 
+            <ViewRecipes
             recipes={recipes} 
             currentPage={currentPage}
             selectedCategory={selectedCategory} 
