@@ -1,4 +1,4 @@
-//les infos sur le user
+//authSlice
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
