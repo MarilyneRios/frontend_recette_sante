@@ -18,6 +18,7 @@ export const apiSlice = createApi({
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
+  /*
   baseUrl: 'https://backend-recette-sante.onrender.com',
   prepareHeaders: (headers, { getState }) => {
     // Obtenez le jeton du state Redux
@@ -29,7 +30,7 @@ const baseQuery = fetchBaseQuery({
     }
 
     return headers;
-  },
+  },*/
 });
 
 export const apiSlice = createApi({
