@@ -7,9 +7,8 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://backend-recette-sante.onrender.com', 
+        target: 'https://backend-recette-sante.onrender.com/api', 
         // target: 'http://localhost:3001',
-        //target:  'https://frontend-recette-sante.onrender.com',
         changeOrigin: true,
       },
     },
