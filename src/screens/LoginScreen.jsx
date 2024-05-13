@@ -31,9 +31,9 @@ const LoginScreen = () => {
     if (userInfo) {
       navigate("/");
       // Après la connexion de l'utilisateur pour voir si l'état actuel de l’authentification 
-      console.log("login vérif store" + store.getState().auth);
+      console.log("login vérif store" + JSON.stringify(store.getState().auth, null, 2));
     }
-  }, [navigate, userInfo]);
+  }, [navigate, userInfo,store]);
 
   const translateError = (error) => {
     if (error.includes("Invalid email or password")) {
