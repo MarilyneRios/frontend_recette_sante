@@ -31,7 +31,7 @@ const LoginScreen = () => {
     if (userInfo) {
       navigate("/");
       // Après la connexion de l'utilisateur pour voir si l'état actuel de l’authentification 
-      console.log(store.getState().auth);
+      console.log("login vérif store" + store.getState().auth);
     }
   }, [navigate, userInfo]);
 
