@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import { FaEye } from "react-icons/fa"; //<FaEye />
 import { FaEyeSlash } from "react-icons/fa6"; //<FaEyeSlash />
+import {useStore} from 'react-redux';//
 
 
 const LoginScreen = () => {
@@ -20,6 +21,7 @@ const LoginScreen = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const store = useStore();//
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -28,6 +30,8 @@ const LoginScreen = () => {
   useEffect(() => {
     if (userInfo) {
       navigate("/");
+      // Après la connexion de l'utilisateur pour voir si l'état actuel de l’authentification 
+      console.log(store.getState().auth);
     }
   }, [navigate, userInfo]);
 
